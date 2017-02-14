@@ -14,4 +14,6 @@ const data = [{
   vote: 11
 }]
 
+// [{"userID":"2", "content":"Use required property of $error", "vote":"13"},{"userID":"3", "content":"address validation along with valid email address.", "vote":"2"}]
+
 module.exports = data
