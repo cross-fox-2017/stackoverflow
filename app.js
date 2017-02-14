@@ -6,9 +6,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const cors = require('cors');
+const autoIncrement = require('mongoose-auto-increment')
 
-mongoose.connect('mongodb://localhost/stack_overflow')
+const connection = mongoose.connect('mongodb://localhost/stack_overflow')
 mongoose.Promise = global.Promise
+autoIncrement.initialize(connection)
 
 var index = require('./routes/index');
 var users = require('./routes/users');
