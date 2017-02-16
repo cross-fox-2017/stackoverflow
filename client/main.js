@@ -18,25 +18,27 @@ function getAllQuestion(){
           $('#list-of-questions').append(
             `<tr>
               <td>
-              <div class="ui left labeled button" tabindex="0" onclick="detail('${item._id}')">
-                <p class="ui basic label">
+              <div>
+                <label class="ui header">
                   ${item.title}
-                </p>
-                <div class="ui button blue">
-                  <i class="reply icon"></i> Details
-                </div>
+                </label>
+              </div>
+              <div class="ui icon buttons">
+                <button class="ui primary button" onclick="detail('${item._id}')"><i class="expand icon"></i>Details</button>
+                <button class="ui negative button"><i class="erase icon"></i>Delete</button>
+                <button class="ui positive button"><i class="edit icon"></i>Edit</button>
               </div>
               </td>
               <td>${item.content}</td>
               <td>${item.answer.length}</td>
               <td>
-                <button class="ui labeled positive icon button">
+                <button onclick="upvoteQuestion('${item._id}')" class="ui labeled positive icon button">
                   <i class="thumbs up icon"></i>
                   ${item.upvote.length}
                 </button>
               </td>
               <td>
-                <button class="ui labeled negative icon button">
+                <button onclick="downvoteQuestion('${item._id}')" class="ui labeled negative icon button">
                   <i class="thumbs down icon"></i>
                   ${item.downvote.length}
                 </button>
@@ -73,7 +75,7 @@ function postAnswer(questionid){
   let userid = sessionStorage.getItem('userid')
   $.ajax({
     method: 'POST',
-    url: `http://localhost:3000/api/questions/answer/${questionid}`,
+    url: `http://localhost:3000/api/questions/${questionid}/answer`,
     beforeSend: function(request) {
       request.setRequestHeader("token", sessionStorage.getItem('token'));
     },
@@ -126,6 +128,34 @@ function detail(questionid){
         })
         .modal('show')
       }
+    }
+  })
+}
+function upvoteQuestion(questionid){
+  $.ajax({
+    method: 'POST',
+    url: `http://localhost:3000/api/questions/${questionid}/upvote`,
+    beforeSend: function(request) {
+      request.setRequestHeader("token", sessionStorage.getItem('token'));
+    },
+    data: {userid: sessionStorage.getItem('userid')},
+    success: function(data){
+      console.log(data);
+      getAllQuestion()
+    }
+  })
+}
+function downvoteQuestion(questionid){
+  $.ajax({
+    method: 'POST',
+    url: `http://localhost:3000/api/questions/${questionid}/downvote`,
+    beforeSend: function(request) {
+      request.setRequestHeader("token", sessionStorage.getItem('token'));
+    },
+    data: {userid: sessionStorage.getItem('userid')},
+    success: function(data){
+      console.log(data);
+      getAllQuestion()
     }
   })
 }

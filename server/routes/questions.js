@@ -7,10 +7,10 @@ router.get('/:id', questionController.findByQuestionId)
 router.post('/', questionController.createQuestion)
 router.put('/:id', questionController.updateQuestion)
 router.delete('/:id', questionController.deleteQuestion)
-router.post('/upvote/:id', questionController.questionUpvote)
-router.post('/downvote/:id', questionController.questionDownvote)
+router.post('/:id/upvote', questionController.questionUpvote)
+router.post('/:id/downvote', questionController.questionDownvote)
 
-router.post('/answer/:id', questionController.createAnswer)
+router.post('/:id/answer', questionController.createAnswer)
 router.post('/answer/upvote', questionController.answerUpvote)
 router.post('/answer/downvote', questionController.answerDownvote)
 
