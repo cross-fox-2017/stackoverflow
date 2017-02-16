@@ -25,7 +25,7 @@ module.exports = {
 
   add: (req, res) => {
     Questions.create({
-      userID: Number(req.body.userID),
+      userId: Number(req.body.userId),
       title: req.body.title,
       answers: [],
       content: req.body.content,
@@ -37,11 +37,18 @@ module.exports = {
     })
   },
 
+  remove: (req, res) => {
+    Questions.findByIdAndRemove(req.params.id, (err, question) => {
+      if (err) res.status(500).send(err)
+      res.send(question)
+    })
+  },
+
   addAnswer: (req, res) => {
     Questions.findByIdAndUpdate(req.params.id, {
       $push: {
         'answers': {
-          userID: Number(req.body.userID),
+          userId: Number(req.body.userID),
           content: req.body.content,
           upvote: [],
           downvote: []
@@ -108,6 +115,7 @@ module.exports = {
       }
     })
   },
+
   downvoteQuestion: (req, res) => {
     let downvoteCondition = true
 
