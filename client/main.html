@@ -16,7 +16,7 @@
   </head>
   <body>
     <div class="ui container">
-      <form class="ui form" id="createForm">
+      <form class="ui form" id="create-form">
         <div class="field">
           <label>Question Title</label>
           <input name="question-title" placeholder="Question Title" type="text">
@@ -29,11 +29,11 @@
       </form>
       <table class="ui celled padded table">
         <thead>
-          <th>Title</th>
-          <th>Question</th>
-          <th>Answers</th>
-          <th>UpVotes</th>
-          <th>DownVotes</th>
+          <th class="three coloumn wide">Title</th>
+          <th class="six coloumn wide">Question</th>
+          <th class="one coloumn wide">Answers</th>
+          <th class="one coloumn wide">UpVotes</th>
+          <th class="one coloumn wide">DownVotes</th>
         </thead>
         <tbody id="list-of-questions"></tbody>
       </table>
@@ -54,7 +54,9 @@
         </table>
         <div class="ui form">
           <div class="ui header">Your Answer</div>
+          <label>Answer Title</label>
           <input id="answer-title" type="text" placeholder="Answer title">
+          <label>Answer Content</label>
           <textarea id="answer-content" placeholder="Answer"></textarea>
         </div>
       </div>

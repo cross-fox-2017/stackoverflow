@@ -29,8 +29,18 @@ function getAllQuestion(){
               </td>
               <td>${item.content}</td>
               <td>${item.answer.length}</td>
-              <td>${item.upvote.length}</td>
-              <td>${item.downvote.length}</td>
+              <td>
+                <button class="ui labeled positive icon button">
+                  <i class="thumbs up icon"></i>
+                  ${item.upvote.length}
+                </button>
+              </td>
+              <td>
+                <button class="ui labeled negative icon button">
+                  <i class="thumbs down icon"></i>
+                  ${item.downvote.length}
+                </button>
+              </td>
             </tr>`
           )
         })
@@ -40,8 +50,8 @@ function getAllQuestion(){
 }
 function createQuestion(e){
   e.preventDefault()
-  let title = $('#createForm input[name=question-title]').val()
-  let content = $('#createForm textarea[name=question-content]').val()
+  let title = $('#create-form input[name=question-title]').val()
+  let content = $('#create-form textarea[name=question-content]').val()
   let userid = sessionStorage.getItem('userid')
   $.ajax({
     method: 'POST',
@@ -52,6 +62,8 @@ function createQuestion(e){
     data: {title: title, content: content, userid: userid},
     success: function(data){
       getAllQuestion()
+      $('#create-form input[name=question-title]').val('')
+      $('#create-form textarea[name=question-content]').val('')
     }
   })
 }
@@ -66,6 +78,9 @@ function postAnswer(questionid){
       request.setRequestHeader("token", sessionStorage.getItem('token'));
     },
     data: {title: title, content: content, userid: userid},
+    success: function(data){
+      getAllQuestion()
+    }
   })
 }
 function detail(questionid){
@@ -82,13 +97,25 @@ function detail(questionid){
         $('.long.modal')
         .modal('setting', {
           onShow: function(){
+            $('#answer-content').val('')
+            $('#answer-title').val('')
             $('#list-of-answers').empty()
             data.answer.forEach(function(item){
               $('#list-of-answers').append(
               `<tr>
                 <td>${item.content}</td>
-                <td>${item.upvote.length}</td>
-                <td>${item.downvote.length}</td>
+                <td>
+                  <button class="ui labeled positive icon button">
+                    <i class="thumbs up icon"></i>
+                    ${item.upvote.length}
+                  </button>
+                </td>
+                <td>
+                  <button class="ui labeled negative icon button">
+                    <i class="thumbs down icon"></i>
+                    ${item.downvote.length}
+                  </button>
+                </td>
               </tr>`
               )
             })
