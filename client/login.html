@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <form>
+      <input type="text" name="username" id="username"><br>
+      <input type="text" name="password" id="password"><br>
+      <button type="button" name="button" onclick="login()">login</button>
+    </form>
+
+    <button type="button" name="button" onclick="getAllUser()">get all user</button>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript">
+  function login(){
+    $.ajax({
+        url: "http://localhost:3000/api/users/login",
+        type: "POST",
+        data: {
+          username: $('#username').val(),
+          password: $('#password').val()
+        },
+        success: function( result ) {
+          if(result.msgCode){
+            localStorage.setItem("token", result.token);
+          }else{
+            alert(result.msg)
+          }
+        }
+      });
+  }
+
+  function getAllUser(){
+    $.ajax({
+        url: "http://localhost:3000/api/users",
+        type: "GET",
+        beforeSend: function(request) {
+          request.setRequestHeader("token", localStorage.getItem("token"));
+        },
+        success: function( result ) {
+          if(result.msgCode == 0){
+            alert(result.msg)
+          }else{
+            console.log(result);
+          }
+        }
+      });
+  }
+  </script>
+  </body>
+</html>
