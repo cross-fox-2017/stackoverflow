@@ -65,7 +65,7 @@ const questionController = {
           res.json(question)
         })
       } else {
-        res.send('already upvote')
+        res.send('already upvote this question')
       }
     })
   },
@@ -86,7 +86,7 @@ const questionController = {
           res.json(question)
         })
       } else {
-        res.send('already downvote')
+        res.send('already downvote this question')
       }
     })
   },
@@ -112,11 +112,21 @@ const questionController = {
     let answerid = req.body.answerid
     let userid = req.body.userid
     questions.findById(id, function(err, question){
-      question.answer.id(answerid).upvote.push({userid: userid})
-      question.save(function(err){
-        if(err) throw err;
-        res.json(question)
+      let vote = false
+      question.answer.id(answerid).upvote.forEach(function(data){
+        if (data.userid == userid){
+          vote = true
+        }
       })
+      if (!vote){
+        question.answer.id(answerid).upvote.push({userid: userid})
+        question.save(function(err){
+          if(err) throw err;
+          res.json(question)
+        })
+      } else {
+        res.send('already upvote this answer')
+      }
     })
   },
   answerDownvote: function(req, res){
@@ -124,11 +134,21 @@ const questionController = {
     let answerid = req.body.answerid
     let userid = req.body.userid
     questions.findById(id, function(err, question){
-      question.answer.id(answerid).upvote.push({userid: userid})
-      question.save(function(err){
-        if(err) throw err;
-        res.json(question)
+      let vote = false
+      question.answer.id(answerid).downvote.forEach(function(data){
+        if (data.userid == userid){
+          vote = true
+        }
       })
+      if (!vote){
+        question.answer.id(answerid).downvote.push({userid: userid})
+        question.save(function(err){
+          if(err) throw err;
+          res.json(question)
+        })
+      } else {
+        res.send('already downvote this answer')
+      }
     })
   }
 }
