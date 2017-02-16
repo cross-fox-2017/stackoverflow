@@ -23,14 +23,14 @@ const questionController = {
     })
   },
   findByQuestionId: function (req, res){
-    let id = req.params.id
+    let id = req.params.questionid
     questions.findById(id, function(err, question){
       if (err) throw err;
       res.send(question)
     })
   },
   updateQuestion: function(req, res) {
-    let id = req.params.id
+    let id = req.params.questionid
     let content = req.body.content
     questions.findOneAndUpdate({_id: id}, {content: content}, {new: true}, function(err, question){
       if (err) throw err;
@@ -38,7 +38,7 @@ const questionController = {
     })
   },
   deleteQuestion: function(req, res) {
-    let id = req.params.id
+    let id = req.params.questionid
     questions.findById(id, function(err, question) {
       if (err) throw err;
       if(!question){res.send('question not found')}
@@ -49,7 +49,7 @@ const questionController = {
     });
   },
   questionUpvote: function(req, res){
-    let id = req.params.id
+    let id = req.params.questionid
     let userid = req.body.userid
     questions.findById(id, function(err, question){
       let vote = false
@@ -70,7 +70,7 @@ const questionController = {
     })
   },
   questionDownvote: function(req, res){
-    let id = req.params.id
+    let id = req.params.questionid
     let userid = req.body.userid
     questions.findById(id, function(err, question){
       let vote = false
@@ -91,7 +91,7 @@ const questionController = {
     })
   },
   createAnswer: function(req, res) {
-    let id = req.params.id
+    let id = req.params.questionid
     let data = {
       title: req.body.title,
       content: req.body.content,
@@ -108,8 +108,8 @@ const questionController = {
     })
   },
   answerUpvote: function(req, res){
-    let questionid = req.body.questionid
-    let answerid = req.body.answerid
+    let questionid = req.params.questionid
+    let answerid = req.params.answerid
     let userid = req.body.userid
     questions.findById(questionid, function(err, question){
       let vote = false
@@ -130,8 +130,8 @@ const questionController = {
     })
   },
   answerDownvote: function(req, res){
-    let questionid = req.body.questionid
-    let answerid = req.body.answerid
+    let questionid = req.params.questionid
+    let answerid = req.params.answerid
     let userid = req.body.userid
     questions.findById(questionid, function(err, question){
       let vote = false

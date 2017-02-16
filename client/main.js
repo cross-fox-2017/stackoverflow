@@ -107,13 +107,13 @@ function detail(questionid){
               `<tr>
                 <td>${item.content}</td>
                 <td>
-                  <button class="ui labeled positive icon button">
+                  <button onclick="upvoteAnswer('${item._id}', '${questionid}')" class="ui labeled positive icon button">
                     <i class="thumbs up icon"></i>
                     ${item.upvote.length}
                   </button>
                 </td>
                 <td>
-                  <button class="ui labeled negative icon button">
+                  <button onclick="downvoteAnswer('${item._id}', '${questionid}')" class="ui labeled negative icon button">
                     <i class="thumbs down icon"></i>
                     ${item.downvote.length}
                   </button>
@@ -149,6 +149,34 @@ function downvoteQuestion(questionid){
   $.ajax({
     method: 'POST',
     url: `http://localhost:3000/api/questions/${questionid}/downvote`,
+    beforeSend: function(request) {
+      request.setRequestHeader("token", sessionStorage.getItem('token'));
+    },
+    data: {userid: sessionStorage.getItem('userid')},
+    success: function(data){
+      console.log(data);
+      getAllQuestion()
+    }
+  })
+}
+function upvoteAnswer(answerid, questionid){
+  $.ajax({
+    method: 'POST',
+    url: `http://localhost:3000/api/questions/${questionid}/answer/${answerid}/upvote`,
+    beforeSend: function(request) {
+      request.setRequestHeader("token", sessionStorage.getItem('token'));
+    },
+    data: {userid: sessionStorage.getItem('userid')},
+    success: function(data){
+      console.log(data);
+      getAllQuestion()
+    }
+  })
+}
+function downvoteAnswer(answerid, questionid){
+  $.ajax({
+    method: 'POST',
+    url: `http://localhost:3000/api/questions/${questionid}/answer/${answerid}/downvote`,
     beforeSend: function(request) {
       request.setRequestHeader("token", sessionStorage.getItem('token'));
     },
