@@ -17,7 +17,7 @@
 | /question/          | POST   | Create new Question  |
 | /question/:id       | PUT    | Edit Question        |
 | /question/:id       | DELETE | DELETE Question      |
-| /answer/:id         | POST   | Create new Answer    |
+| /question/:id       | POST   | Create new Answer    |
 
 ### Release 2
 ```
