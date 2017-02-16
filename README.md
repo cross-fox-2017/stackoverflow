@@ -13,7 +13,7 @@ Release 1:
 ```
 #### Models
 1. Users -->  Username, Password
-2. Question --> title, content, userid, Answerid, Vote
+2. Question --> title, content, userid, Answer, Vote
 *-- Answer --> title, content, userid, Vote
 --*
 
@@ -22,7 +22,7 @@ Release 1:
 |---------------------|--------|----------------------|
 | /api/users          | GET    | GET All Users        |
 | /api/users/register | POST   | Create new User      |
-| /api/users/         | POST   | Login Users          |
+| /api/users/login    | POST   | Login Users          |
 | /api/question/      | GET    | GET list of Question |
 | /api/question/      | POST   | Create new Question  |
 | /api/question/:id   | DELETE | DELETE Question      |
