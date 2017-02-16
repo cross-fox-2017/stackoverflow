@@ -8,8 +8,9 @@ router.delete('/:id', controller.remove)
 router.get('/', controller.list)
 
 router.post('/:id/answers', controller.addAnswer)
+router.put('/:id/answers', controller.removeAllAnswer)
+
 router.put('/:id/answers/:answerId/remove', controller.removeAnswer)
-router.put('/:id/answers/removeAll', controller.removeAllAnswer)
 
 router.put('/:id/upvote', controller.upvoteQuestion)
 router.put('/:id/downvote', controller.downvoteQuestion)

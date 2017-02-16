@@ -29,10 +29,10 @@ module.exports = {
       title: req.body.title,
       answers: [],
       content: req.body.content,
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, (err, question) => {
-      if (err) res.send(err)
+      if (err) res.status(500).send(err)
       res.send(question)
     })
   },
@@ -48,44 +48,47 @@ module.exports = {
     Questions.findByIdAndUpdate(req.params.id, {
       $push: {
         'answers': {
-          userId: Number(req.body.userID),
+          userId: Number(req.body.userId),
           content: req.body.content,
           upvote: [],
-          downvote: []
+          downvote: [],
+          createdAt: new Date(),
+          updatedAt: new Date()
         }
       }
     }, {
       new: true,
       upsert: true
     }, (err, data) => {
-      if (err) res.send(err)
+      if (err) res.status(500).send(err)
       else res.send(data)
     })
   },
 
-  removeAnswer: (req, res) => {
-    Questions.findByIdAndUpdate({ _id: req.params.id }, {
-      $pull: {
-        answer: {
-          id: Number(req.body.id)
-        }
-      }
+  removeAllAnswer: (req, res) => {
+    Questions.findByIdAndUpdate(req.params.id, {
+      answers: []
     }, {
       new: true
     }, (err, data) => {
-      if (err) res.send(err)
+      if (err) res.status(500).send(err)
       res.send(data)
     })
   },
 
-  removeAllAnswer: (req, res) => {
-    Questions.findByIdAndUpdate({ _id: req.params.id }, {
-      answer: []
+  removeAnswer: (req, res) => {
+    Questions.findByIdAndUpdate(req.params.id, {
+      $pull: {
+        'answers': {
+          _id: req.params.answerId
+        }
+      }
     }, {
-      new: true
+      new: true,
+      upsert: true
     }, (err, data) => {
-      if (err) res.send(err)
-      res.send(data)
+      if (err) res.status(500).send(err)
+      else res.send(data)
     })
   },
 
@@ -93,21 +96,21 @@ module.exports = {
     let upvoteCondition = true
 
     Questions.findOne({ _id: req.params.id }, (err, data) => {
-      if (err) res.send(err)
+      if (err) res.status(500).send(err)
       data.upvote.forEach(vote => {
         if (vote == req.body.id) {
           upvoteCondition = false
         }
       })
       if (upvoteCondition) {
-        Questions.findByIdAndUpdate({ _id: req.params.id}, {
+        Questions.findByIdAndUpdate(req.params.id, {
           $push: {
             upvote: Number(req.body.id) // USER ID who upvote the question
           }
         }, {
           new: true
         }, (err, vote) => {
-          if (err) res.send(err)
+          if (err) res.status(500).send(err)
           res.send(vote)
         })
       } else {
@@ -120,21 +123,21 @@ module.exports = {
     let downvoteCondition = true
 
     Questions.findOne({ _id: req.params.id }, (err, data) => {
-      if (err) res.send(err)
+      if (err) res.status(500).send(err)
       data.downvote.forEach(vote => {
         if (vote == req.body.id) {
           downvoteCondition = false
         }
       })
       if (downvoteCondition) {
-        Questions.findByIdAndUpdate({ _id: req.params.id }, {
+        Questions.findByIdAndUpdate(req.params.id, {
           $push: {
             downvote: Number(req.body.id) // USER ID who downvote the question
           }
         }, {
           new: true
         }, (err, vote) => {
-          if (err) res.send(err)
+          if (err) res.status(500).send(err)
           res.send(vote)
         })
       } else {
@@ -142,30 +145,31 @@ module.exports = {
       }
     })
   },
+
   upvoteAnswer: (req, res) => {
     let answerCondition = true
+    let answerObj
 
-    // res.send(upvoteCondition)
     Questions.findOne({ _id: req.params.id }, (err, data) => {
-      if (err) res.send(err)
-      console.log(data.answer[req.body.index].upvote)
-      data.answer[req.body.index].upvote.forEach(vote => {
-        if (vote == req.body.id) {
+      if (err) res.status(500).send(err)
+
+      data.answers.forEach(answer => {
+        if (answer._id == req.params.answerId) {
+          answerObj = answer
+        }
+      })
+
+      answerObj.upvote.forEach(upvote => {
+        if (upvote == req.body.id) {
           answerCondition = false
         }
       })
 
-      console.log(answerCondition)
       if (answerCondition) {
-        Questions.findById(req.params.id, (err, question) => {
-          console.log({question})
-
-          question.answer[req.body.index].upvote.push(Number(req.body.id))
-
-          question.save((err, question) => {
-            if (err) res.send(err)
-            res.send(question)
-          })
+        answerObj.upvote.push(Number(req.body.id))
+        data.save((err, result) => {
+          if (err) res.status(500).send(err)
+          else res.send(result)
         })
       } else {
         res.send('You cannot upvote the same answer again!')
@@ -174,31 +178,36 @@ module.exports = {
   },
 
   downvoteAnswer: (req, res) => {
-    let downvoteCondition = true
+    let answerCondition = true
+    let answerObj
 
     Questions.findOne({ _id: req.params.id }, (err, data) => {
-      if (err) res.send(err)
-      data.downvote.forEach(vote => {
-        if (vote == req.body.id) {
-          downvoteCondition = false
+      if (err) res.status(500).send(err)
+
+      data.answers.forEach(answer => {
+        if (answer._id == req.params.answerId) {
+          answerObj = answer
         }
       })
-      if (downvoteCondition) {
-        Questions.findByIdAndUpdate({ _id: req.params.id }, {
-          $push: {
-            downvote: Number(req.body.id) // USER ID who downvote the question
-          }
-        }, {
-          new: true
-        }, (err, vote) => {
-          if (err) res.send(err)
-          res.send(vote)
+
+      answerObj.downvote.forEach(downvote => {
+        if (downvote == req.body.id) {
+          answerCondition = false
+        }
+      })
+
+      if (answerCondition) {
+        answerObj.downvote.push(Number(req.body.id))
+        data.save((err, result) => {
+          if (err) res.status(500).send(err)
+          else res.send(result)
         })
       } else {
-        res.send('You cannot downvote the same question again!')
+        res.send('You cannot downvote the same answer again!')
       }
     })
   },
+
   seedKey: (req, res, next) => {
     if (req.header('auth') === 'admin123') {
       next()
