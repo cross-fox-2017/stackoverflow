@@ -24,6 +24,7 @@ Release 1:
 | /api/users/register | POST   | Create new User      |
 | /api/users/login    | POST   | Login Users          |
 | /api/question/      | GET    | GET list of Question |
+| /api/question/:id   | GET    | GET question details |
 | /api/question/      | POST   | Create new Question  |
 | /api/question/:id   | DELETE | DELETE Question      |
 | /api/question/:id   | PUT    | Edit Question        |

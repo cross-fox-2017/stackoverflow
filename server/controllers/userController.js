@@ -1,5 +1,6 @@
 const users = require('../models/users')
 const hash = require('password-hash')
+const jwt = require('jsonwebtoken');
 
 const userController = {
   findAll: function(req, res) {
@@ -35,7 +36,8 @@ const userController = {
         res.json({msg: "Username not Found"})
       }
       if(hash.verify(password, data.password)){
-        res.json(data)
+        var token = jwt.sign(data, process.env.SECRETJWT);
+        res.send({token: token})
       } else {
         res.json({msg: "Incorrect Password"})
       }
