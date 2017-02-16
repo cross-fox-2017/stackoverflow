@@ -37,7 +37,7 @@ const userController = {
       }
       if(hash.verify(password, data.password)){
         var token = jwt.sign({user: data.username}, process.env.SECRETJWT);
-        res.send({token: token})
+        res.send({token: token, userid: data._id})
       } else {
         res.json({msg: "Incorrect Password"})
       }

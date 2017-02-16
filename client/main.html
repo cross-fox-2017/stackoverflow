@@ -16,6 +16,17 @@
   </head>
   <body>
     <div class="ui container">
+      <form class="ui form" id="createForm">
+        <div class="field">
+          <label>Question Title</label>
+          <input name="question-title" placeholder="Question Title" type="text">
+        </div>
+        <div class="field">
+          <label>Question Content</label>
+          <textarea name="question-content" placeholder="Question Content"></textarea>
+        </div>
+        <button class="ui button green fluid" id="create-new-question" type="submit">Ask Question</button>
+      </form>
       <table class="ui celled padded table">
         <thead>
           <th>Title</th>
@@ -26,6 +37,31 @@
         </thead>
         <tbody id="list-of-questions"></tbody>
       </table>
+    </div>
+    <div class="ui long modal">
+      <i class="close icon"></i>
+      <div class="header">
+        Question Details
+      </div>
+      <div class="image content">
+        <div class="description">
+          <div class="ui header">We've auto-chosen a profile image for you.</div>
+          <p>We've grabbed the following image from the image associated with your registered e-mail address.</p>
+          <p>Is it okay to use this photo?</p>
+        </div>
+      </div>
+      <div class="ui form">
+        <textarea></textarea>
+      </div>
+      <div class="actions">
+        <div class="ui black deny button">
+          Nope
+        </div>
+        <div class="ui positive right labeled icon button">
+          Submit Answer
+          <i class="checkmark icon"></i>
+        </div>
+      </div>
     </div>
   </body>
   <script src="main.js"></script>

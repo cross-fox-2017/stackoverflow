@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
-var autoincrement = require('simple-mongoose-autoincrement');
+// var autoincrement = require('simple-mongoose-autoincrement');
 
 var voteSchema = new Schema({
   userid: { type: Schema.Types.ObjectId, ref: 'Users' },
@@ -23,8 +23,6 @@ var QuestionsSchema = new Schema({
   answer:[answerSchema]
 })
 
-QuestionsSchema.plugin(autoincrement, {field: 'questionid'});
-answerSchema.plugin(autoincrement, {field: 'answerid'});
 
 var questions = mongoose.model('Questions', QuestionsSchema);
 
