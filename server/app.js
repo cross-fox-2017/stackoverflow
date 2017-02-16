@@ -17,9 +17,9 @@ var app = express();
 //Database
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.Promise = global.Promise;
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
+
+mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
+mongoose.connection.once('open', function() {
   console.log(`connected to Port ${process.env.PORT} At ${process.env.MONGODB_URI}`);
 });
 
