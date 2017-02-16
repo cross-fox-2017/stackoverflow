@@ -108,10 +108,10 @@ const questionController = {
     })
   },
   answerUpvote: function(req, res){
-    let id = req.params.id
+    let questionid = req.body.questionid
     let answerid = req.body.answerid
     let userid = req.body.userid
-    questions.findById(id, function(err, question){
+    questions.findById(questionid, function(err, question){
       let vote = false
       question.answer.id(answerid).upvote.forEach(function(data){
         if (data.userid == userid){
@@ -130,10 +130,10 @@ const questionController = {
     })
   },
   answerDownvote: function(req, res){
-    let id = req.params.id
+    let questionid = req.body.questionid
     let answerid = req.body.answerid
     let userid = req.body.userid
-    questions.findById(id, function(err, question){
+    questions.findById(questionid, function(err, question){
       let vote = false
       question.answer.id(answerid).downvote.forEach(function(data){
         if (data.userid == userid){
