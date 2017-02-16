@@ -36,6 +36,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
 
+app.use('/api/questions', function(req, res, next){
+  if (req.headers.token == 'null'){
+    res.send('please-login')
+  } else {
+    next()
+  }
+})
+
 app.use('/', index);
 app.use('/api/users', users);
 app.use('/api/questions', questions);

@@ -11,7 +11,7 @@ $('#login-form').on('submit', function(e){
     data: {username: username, password: password},
     dataType: 'json',
     success: function (data) {
-      localStorage.setItem('token', data.token)
+      sessionStorage.setItem('token', data.token)
       window.location.href = `${location}main.html`
     }
   })
