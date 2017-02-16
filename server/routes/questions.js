@@ -11,5 +11,7 @@ router.post('/upvote/:id', questionController.questionUpvote)
 router.post('/downvote/:id', questionController.questionDownvote)
 
 router.post('/:id', questionController.createAnswer)
+router.post('/answer/upvote/:id', questionController.answerUpvote)
+router.post('/answer/downvote/:id', questionController.answerDownvote)
 
 module.exports = router;

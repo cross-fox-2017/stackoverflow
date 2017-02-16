@@ -48,23 +48,6 @@ const questionController = {
       });
     });
   },
-  createAnswer: function(req, res) {
-    let id = req.params.id
-    let data = {
-      title: req.body.title,
-      content: req.body.content,
-      downvote: [],
-      upvote: [],
-      userid: req.body.userid
-    }
-    questions.findById(id, function(err, question){
-      question.answer.push(data)
-      question.save(function(err){
-        if(err) throw err;
-        res.json(question)
-      })
-    })
-  },
   questionUpvote: function(req, res){
     let id = req.params.id
     let userid = req.body.userid
@@ -105,6 +88,47 @@ const questionController = {
       } else {
         res.send('already downvote')
       }
+    })
+  },
+  createAnswer: function(req, res) {
+    let id = req.params.id
+    let data = {
+      title: req.body.title,
+      content: req.body.content,
+      downvote: [],
+      upvote: [],
+      userid: req.body.userid
+    }
+    questions.findById(id, function(err, question){
+      question.answer.push(data)
+      question.save(function(err){
+        if(err) throw err;
+        res.json(question)
+      })
+    })
+  },
+  answerUpvote: function(req, res){
+    let id = req.params.id
+    let answerid = req.body.answerid
+    let userid = req.body.userid
+    questions.findById(id, function(err, question){
+      question.answer.id(answerid).upvote.push({userid: userid})
+      question.save(function(err){
+        if(err) throw err;
+        res.json(question)
+      })
+    })
+  },
+  answerDownvote: function(req, res){
+    let id = req.params.id
+    let answerid = req.body.answerid
+    let userid = req.body.userid
+    questions.findById(id, function(err, question){
+      question.answer.id(answerid).upvote.push({userid: userid})
+      question.save(function(err){
+        if(err) throw err;
+        res.json(question)
+      })
     })
   }
 }
