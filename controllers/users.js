@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const Users = require('../models/users')
 const passwordHash = require('password-hash')
+const expressJWT = require('express-jwt')
+const jwt = require('jsonwebtoken')
 const seedUsers = require('../seeders/users')
 
 module.exports = {
@@ -52,6 +54,26 @@ module.exports = {
     Users.findByIdAndRemove(req.params.id, (err, user) => {
       if (err) res.status(500).send(err)
       else res.send(user)
+    })
+  },
+
+  signin: (req, res) => {
+    Users.findOne({ username: req.body.username }, (err, user) => {
+      if (err) res.status(500).send(err)
+
+      if (!passwordHash.verify(req.body.password, user.password)) {
+        res.send('Invalid Password!')
+      } else {
+        let myToken = jwt.sign({
+          id: user._id,
+          username: user.username
+        }, 'secret', {
+          expiresIn: '24h'
+        })
+        res.json({
+          token: myToken
+        })
+      }
     })
   }
 }
