@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/css/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="/css/sweetalert.css">
     <link rel="stylesheet" href="/css/stylehome.css">
+    <script src="http://cloud.tinymce.com/stable/tinymce.min.js?apiKey=zeje1w5mflf5rypct29l1gi197zwkb6nswwwq8re1hb01m9i"></script>
+    <script>tinymce.init({ selector:'textarea' });</script>
     <title>Stackoverflow</title>
 </head>
 
@@ -20,10 +22,10 @@
                 <li><a id="logo" href="#">Stack overflow</a></li>
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Create Questions</a></li>
-                    <div class="ui icon input">
-                        <input type="text" placeholder="Search...">
-                        <i class="circular search link icon"></i>
-                    </div>
+                <div class="ui icon input">
+                    <input type="text" placeholder="Search...">
+                    <i class="circular search link icon"></i>
+                </div>
                 <li class="navbar-right"><a href="#">Sign up</a></li>
                 <li class="navbar-right"><a href="#">Login</a></li>
             </ul>
@@ -31,16 +33,14 @@
         <img class="imageHome" src="http://i.imgur.com/ph1yogr.jpg">
 
         <div class="ui two column grid">
-            <div class="ui two column grid voteQues">
+            <div class="ui one column grid voteQues">
+
                 <div class="question ui grid">
                     <div class="voteAns">
                         <div>
                             <h3>0</h3> Votes
                         </div>
-                        <hr>
-                        <div>
-                            <h3>0</h3> Answer
-                        </div>
+                          <button class="ui toggle button active">Voted</button>
                     </div>
                     <div class="Ques">
                         <a href="#">
@@ -49,25 +49,29 @@
                         <p>What tools and technologies are used to build the Stack Exchange Network?</p>
                     </div>
                 </div>
-                <div class="question ui grid">
+                <h3>Total Answers 1</h3><br>
+                <div class="answer ui grid">
                     <div class="voteAns">
                         <div>
                             <h3>0</h3> Votes
                         </div>
-                        <hr>
-                        <div>
-                            <h3>0</h3> Answer
-                        </div>
+                          <button class="ui toggle button active">Voted</button>
                     </div>
                     <div class="Ques">
-                        <a href="#">
-                            <div>Which tools and technologies are used to build the Stack Exchange Network?</div>
-                        </a>
-                        <p>What tools and technologies are used to build the Stack Exchange Network?</p>
+                        <div>You could use url_encode() to make sure every chars could be passed to an url and urldecode() to get the chars back.</div>
                     </div>
+                </div>
+                <div class="textAnswer">
+                  <textarea></textarea>
+                </div>
+                <div class="buttonAnswer">
+                    <button class="ui blue button">Post Your Answer</button>
                 </div>
 
+
             </div>
+
+
 
 
             <div class="iklan">
