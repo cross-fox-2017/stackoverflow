@@ -67,22 +67,44 @@ const questionController = {
   },
   questionUpvote: function(req, res){
     let id = req.params.id
+    let userid = req.body.userid
     questions.findById(id, function(err, question){
-      question.upvote.push(req.body.userid)
-      question.save(function(err){
-        if(err) throw err;
-        res.json(question)
+      let vote = false
+      question.upvote.forEach(function(data){
+        if (data.userid == userid){
+          vote = true
+        }
       })
+      if (!vote){
+        question.upvote.push({userid: req.body.userid})
+        question.save(function(err){
+          if(err) throw err;
+          res.json(question)
+        })
+      } else {
+        res.send('already upvote')
+      }
     })
   },
   questionDownvote: function(req, res){
     let id = req.params.id
+    let userid = req.body.userid
     questions.findById(id, function(err, question){
-      question.downvote.push(req.body.userid)
-      question.save(function(err){
-        if(err) throw err;
-        res.json(question)
+      let vote = false
+      question.downvote.forEach(function(data){
+        if (data.userid == userid){
+          vote = true
+        }
       })
+      if (!vote){
+        question.downvote.push({userid: req.body.userid})
+        question.save(function(err){
+          if(err) throw err;
+          res.json(question)
+        })
+      } else {
+        res.send('already downvote')
+      }
     })
   }
 }
