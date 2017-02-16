@@ -1,3 +1,9 @@
+.iklan {
+  padding: 30px;
+}
 img {
-  size: 10%;
+  width: 100%;
+}
+.padding20 {
+  padding-top: 20px;
 }
