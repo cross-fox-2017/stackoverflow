@@ -32,16 +32,15 @@ function getAllQuestion(){
               <td>${item.content}</td>
               <td>${item.answer.length}</td>
               <td>
-                <button onclick="upvoteQuestion('${item._id}')" class="ui labeled positive icon button">
-                  <i class="thumbs up icon"></i>
-                  ${item.upvote.length}
-                </button>
-              </td>
-              <td>
-                <button onclick="downvoteQuestion('${item._id}')" class="ui labeled negative icon button">
-                  <i class="thumbs down icon"></i>
-                  ${item.downvote.length}
-                </button>
+                <div class="ui icon buttons">
+                  <button onclick="upvoteQuestion('${item._id}')" class="ui positive icon button">
+                    <i class="thumbs up icon"></i>
+                  </button>
+                  <div class="or" data-text="${item.upvote.length - item.downvote.length}"></div>
+                  <button onclick="downvoteQuestion('${item._id}')" class="ui negative icon button">
+                    <i class="thumbs down icon"></i>
+                  </button>
+                </div>
               </td>
             </tr>`
           )
@@ -107,16 +106,15 @@ function detail(questionid){
               `<tr>
                 <td>${item.content}</td>
                 <td>
-                  <button onclick="upvoteAnswer('${item._id}','${questionid}')" class="ui labeled positive icon button">
-                    <i class="thumbs up icon"></i>
-                    ${item.upvote.length}
-                  </button>
-                </td>
-                <td>
-                  <button onclick="downvoteAnswer('${item._id}','${questionid}')" class="ui labeled negative icon button">
-                    <i class="thumbs down icon"></i>
-                    ${item.downvote.length}
-                  </button>
+                  <div class="ui icon buttons">
+                    <button onclick="upvoteAnswer('${item._id}','${questionid}')" class="ui positive icon button">
+                      <i class="thumbs up icon"></i>
+                    </button>
+                    <div class="or" data-text="${item.upvote.length - item.downvote.length}"></div>
+                    <button onclick="downvoteAnswer('${item._id}','${questionid}')" class="ui negative icon button">
+                      <i class="thumbs down icon"></i>
+                    </button>
+                  </div>
                 </td>
               </tr>`
               )
