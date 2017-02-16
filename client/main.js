@@ -25,8 +25,8 @@ function getAllQuestion(){
               </div>
               <div class="ui icon buttons">
                 <button class="ui primary button" onclick="detail('${item._id}')"><i class="expand icon"></i>Details</button>
-                <button class="ui negative button"><i class="erase icon"></i>Delete</button>
-                <button class="ui positive button"><i class="edit icon"></i>Edit</button>
+                <button class="ui negative button" onclick="destroy('${item._id}')"><i class="erase icon"></i>Delete</button>
+                <button class="ui positive button" onclick="edit('${item._id}')"><i class="edit icon"></i>Edit</button>
               </div>
               </td>
               <td>${item.content}</td>
@@ -128,6 +128,14 @@ function detail(questionid){
       }
     }
   })
+}
+function destroy(questionid){
+  console.log("Unable To Delete");
+  console.log("Super Admin Only");
+}
+function edit(questionid){
+  console.log("Unable To Edit");
+  console.log("Super Admin Only");
 }
 function upvoteQuestion(questionid){
   $.ajax({

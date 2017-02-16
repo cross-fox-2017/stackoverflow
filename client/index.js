@@ -11,9 +11,13 @@ $('#login-form').on('submit', function(e){
     data: {username: username, password: password},
     dataType: 'json',
     success: function (data) {
-      sessionStorage.setItem('token', data.token)
-      sessionStorage.setItem('userid', data.userid)
-      window.location.href = `${location}main.html`
+      if(data.token){
+        sessionStorage.setItem('token', data.token)
+        sessionStorage.setItem('userid', data.userid)
+        window.location.href = `${location}main.html`
+      } else {
+        console.log(data);
+      }
     }
   })
 })

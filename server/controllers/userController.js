@@ -34,8 +34,7 @@ const userController = {
       if(err) console.log(err)
       if(!data){
         res.json({msg: "Username not Found"})
-      }
-      if(hash.verify(password, data.password)){
+      } else if(hash.verify(password, data.password)){
         var token = jwt.sign({user: data.username}, process.env.SECRETJWT);
         res.send({token: token, userid: data._id})
       } else {

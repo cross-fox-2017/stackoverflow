@@ -18,17 +18,20 @@ Release 1:
 --*
 
 #### Routes
-| Routes              | HTTP   | Description          |
-|---------------------|--------|----------------------|
-| /api/users          | GET    | GET All Users        |
-| /api/users/register | POST   | Create new User      |
-| /api/users/login    | POST   | Login Users          |
-| /api/question/      | GET    | GET list of Question |
-| /api/question/:id   | GET    | GET question details |
-| /api/question/      | POST   | Create new Question  |
-| /api/question/:id   | DELETE | DELETE Question      |
-| /api/question/:id   | PUT    | Edit Question        |
-| /api/question/:id   | POST   | Create new Answer    |
+| Routes                                              | HTTP   | Description          |
+|-----------------------------------------------------|--------|----------------------|
+| /api/users                                          | GET    | GET All Users        |
+| /api/users/register                                 | POST   | Create new User      |
+| /api/users/login                                    | POST   | Login Users          |
+| /api/question/                                      | GET    | GET list of Question |
+| /api/question/:questionid                           | GET    | Get Question Details |
+| /api/question/:questionid                           | DELETE | DELETE Question      |
+| /api/question/:questionid                           | PUT    | Edit Question        |
+| /api/question/:questionid/upvote                    | POST   | Upvote Question      |
+| /api/question/:questionid/downvote                  | POST   | Downvote Question    |
+| /api/question/:questionid/answer                    | POST   | Create New Answer    |
+| /api/question/:questionid/answer/:answerid/upvote   | POST   | Upvote Answer        |
+| /api/question/:questionid/answer/:answerid/downvote | POST   | Downvote Answer      |
 
 ```
 Release 2:
