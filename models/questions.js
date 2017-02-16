@@ -1,28 +1,26 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const autoIncrement = require('mongoose-auto-increment')
 
 const questionSchema = new Schema({
-  questionID: {
-    type: Number,
-    ref: 'questionID'
-  },
-  userID: {
+  userId: {
     type: Number,
     ref: 'users'
   },
   title: String,
-  answer: [{
-    answerID: {
-      type: Number,
-      ref: 'answerID'
-    },
-    userID: Number,
+  answers: [{
+    userId: Number,
     content: String,
-    vote: Number
-  }], // mongoose.Schema.Types.Mixed -> Any data type & any nested arrays of objects
+    upvote: [],
+    downvote: [],
+    createdAt: Date,
+    updatedAt: Date
+  }],
   content: String,
-  vote: Number
+  upvote: Array,
+  downvote: Array,
+  createdAt: Date,
+  updatedAt: Date
 }, { strict: false })
 
 questionSchema.plugin(autoIncrement.plugin, 'questions')

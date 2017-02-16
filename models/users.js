@@ -1,14 +1,12 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const autoIncrement = require('mongoose-auto-increment')
 
 const userSchema = new Schema({
-  userID: {
-    type: Schema.Types.ObjectId,
-    ref: 'userID'
-  },
   username: String,
-  password: String
+  password: String,
+  createdAt: Date,
+  updatedAt: Date
 })
 
 userSchema.plugin(autoIncrement.plugin, 'users')
