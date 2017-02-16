@@ -10,7 +10,7 @@ router.delete('/:id', questionController.deleteQuestion)
 router.post('/upvote/:id', questionController.questionUpvote)
 router.post('/downvote/:id', questionController.questionDownvote)
 
-router.post('/:id', questionController.createAnswer)
+router.post('/answer/:id', questionController.createAnswer)
 router.post('/answer/upvote', questionController.answerUpvote)
 router.post('/answer/downvote', questionController.answerDownvote)
 

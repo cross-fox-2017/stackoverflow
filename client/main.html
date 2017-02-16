@@ -43,15 +43,20 @@
       <div class="header">
         Question Details
       </div>
-      <div class="image content">
-        <div class="description">
-          <div class="ui header">We've auto-chosen a profile image for you.</div>
-          <p>We've grabbed the following image from the image associated with your registered e-mail address.</p>
-          <p>Is it okay to use this photo?</p>
+      <div class="content">
+        <table class="ui celled padded table">
+          <thead>
+            <th class="ten coloumn wide">Answer</th>
+            <th class="one coloumn wide">Upvote</th>
+            <th class="one coloumn wide">downvote</th>
+          </thead>
+          <tbody id="list-of-answers"></tbody>
+        </table>
+        <div class="ui form">
+          <div class="ui header">Your Answer</div>
+          <input id="answer-title" type="text" placeholder="Answer title">
+          <textarea id="answer-content" placeholder="Answer"></textarea>
         </div>
-      </div>
-      <div class="ui form">
-        <textarea></textarea>
       </div>
       <div class="actions">
         <div class="ui black deny button">
