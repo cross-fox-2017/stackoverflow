@@ -18,31 +18,48 @@ const questionController = {
     let newquestions = questions(data)
     newquestions.save(function(err){
       if(err) throw err;
-      res.json({
-        msg: 'question Created!',
-        book: newquestions
-      })
+      res.json(newquestions)
+    })
+  },
+  findByQuestionId: function (req, res){
+    let id = req.params.id
+    questions.findById(id, function(err, question){
+      if (err) throw err;
+      res.json(question)
     })
   },
   updateQuestion: function(req, res) {
-    res.send('ok')
+    let id = req.params.id
+    let content = req.body.content
+    questions.findOneAndUpdate({_id: id}, {content: content}, {new: true}, function(err, question){
+      if (err) throw err;
+      res.json(question)
+    })
   },
   deleteQuestion: function(req, res) {
-    res.send('ok')
+    let id = req.params.id
+    questions.findById(id, function(err, question) {
+      if (err) throw err;
+      if(!question){res.send('question not found')}
+      question.remove(function(err) {
+        if (err) throw err;
+        res.json(question);
+      });
+    });
   },
   createAnswer: function(req, res) {
+    let id = req.params.id
     let data = {
       title: req.body.title,
       content: req.body.content,
       vote: 0,
       userid: req.body.userid
     }
-    let newbooks = books(data)
-    newbooks.save(function(err){
-      if(err) throw err;
-      res.json({
-        msg: 'book Created!',
-        book: newbooks
+    questions.findById(id, function(err, question){
+      question.answer.push(data)
+      question.save(function(err){
+        if(err) throw err;
+        res.json(question)
       })
     })
   }

@@ -3,6 +3,7 @@ var router = express.Router();
 const questionController = require('../controllers/questionController')
 
 router.get('/', questionController.findAllQuestion)
+router.get('/:id', questionController.findByQuestionId)
 router.post('/', questionController.createQuestion)
 router.put('/:id', questionController.updateQuestion)
 router.delete('/:id', questionController.deleteQuestion)

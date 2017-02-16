@@ -3,7 +3,6 @@ var Schema   = mongoose.Schema;
 var autoincrement = require('simple-mongoose-autoincrement');
 
 var answerSchema = new Schema({
-  answerid: Number,
   title: String,
   content: String,
   vote: Number,
@@ -18,7 +17,7 @@ var QuestionsSchema = new Schema({
   answer:[answerSchema]
 })
 
-QuestionsSchema.plugin(autoincrement, {field: 'answerid'});
+QuestionsSchema.plugin(autoincrement, {field: 'questionid'});
 var questions = mongoose.model('Questions', QuestionsSchema);
 
 module.exports = questions
