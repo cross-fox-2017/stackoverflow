@@ -12,11 +12,8 @@ function getAllQuestion(){
       if(data == 'please-login'){
         window.location.href = '../'
       } else {
-        refreshPage()
+        
       }
     }
   })
-}
-function refreshPage(){
-
 }

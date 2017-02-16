@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors')
 var mongoose = require('mongoose')
+var jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 var index = require('./routes/index');
@@ -40,7 +41,13 @@ app.use('/api/questions', function(req, res, next){
   if (req.headers.token == 'null'){
     res.send('please-login')
   } else {
-    next()
+    jwt.verify(req.headers.token, process.env.SECRETJWT, function(err, decoded){
+      if(!err){
+        next()
+      } else {
+        res.send('please-login')
+      }
+    })
   }
 })
 

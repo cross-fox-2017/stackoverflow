@@ -4,7 +4,7 @@ const questionController = {
   findAllQuestion: function(req, res) {
     questions.find({}, function(err, questions){
       if (err) throw err;
-      res.json(questions)
+      res.send(questions)
     })
   },
   createQuestion: function(req, res) {
@@ -19,14 +19,14 @@ const questionController = {
     let newquestions = questions(data)
     newquestions.save(function(err){
       if(err) throw err;
-      res.json(newquestions)
+      res.send(newquestions)
     })
   },
   findByQuestionId: function (req, res){
     let id = req.params.id
     questions.findById(id, function(err, question){
       if (err) throw err;
-      res.json(question)
+      res.send(question)
     })
   },
   updateQuestion: function(req, res) {
@@ -34,7 +34,7 @@ const questionController = {
     let content = req.body.content
     questions.findOneAndUpdate({_id: id}, {content: content}, {new: true}, function(err, question){
       if (err) throw err;
-      res.json(question)
+      res.send(question)
     })
   },
   deleteQuestion: function(req, res) {
@@ -44,7 +44,7 @@ const questionController = {
       if(!question){res.send('question not found')}
       question.remove(function(err) {
         if (err) throw err;
-        res.json(question);
+        res.send(question);
       });
     });
   },
@@ -62,7 +62,7 @@ const questionController = {
         question.upvote.push({userid: req.body.userid})
         question.save(function(err){
           if(err) throw err;
-          res.json(question)
+          res.send(question)
         })
       } else {
         res.send('already upvote this question')
@@ -83,7 +83,7 @@ const questionController = {
         question.downvote.push({userid: req.body.userid})
         question.save(function(err){
           if(err) throw err;
-          res.json(question)
+          res.send(question)
         })
       } else {
         res.send('already downvote this question')
@@ -103,7 +103,7 @@ const questionController = {
       question.answer.push(data)
       question.save(function(err){
         if(err) throw err;
-        res.json(question)
+        res.send(question)
       })
     })
   },
@@ -122,7 +122,7 @@ const questionController = {
         question.answer.id(answerid).upvote.push({userid: userid})
         question.save(function(err){
           if(err) throw err;
-          res.json(question)
+          res.send(question)
         })
       } else {
         res.send('already upvote this answer')
@@ -144,7 +144,7 @@ const questionController = {
         question.answer.id(answerid).downvote.push({userid: userid})
         question.save(function(err){
           if(err) throw err;
-          res.json(question)
+          res.send(question)
         })
       } else {
         res.send('already downvote this answer')
