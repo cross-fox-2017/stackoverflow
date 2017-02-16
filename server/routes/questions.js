@@ -7,6 +7,9 @@ router.get('/:id', questionController.findByQuestionId)
 router.post('/', questionController.createQuestion)
 router.put('/:id', questionController.updateQuestion)
 router.delete('/:id', questionController.deleteQuestion)
+router.post('/upvote/:id', questionController.questionUpvote)
+router.post('/downvote/:id', questionController.questionDownvote)
+
 router.post('/:id', questionController.createAnswer)
 
 module.exports = router;

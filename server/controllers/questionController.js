@@ -11,7 +11,8 @@ const questionController = {
     let data = {
       title : req.body.title,
       content: req.body.content,
-      vote: 0,
+      upvote: [],
+      downvote: [],
       userid: req.body.userid,
       answer: []
     }
@@ -52,11 +53,32 @@ const questionController = {
     let data = {
       title: req.body.title,
       content: req.body.content,
-      vote: 0,
+      downvote: [],
+      upvote: [],
       userid: req.body.userid
     }
     questions.findById(id, function(err, question){
       question.answer.push(data)
+      question.save(function(err){
+        if(err) throw err;
+        res.json(question)
+      })
+    })
+  },
+  questionUpvote: function(req, res){
+    let id = req.params.id
+    questions.findById(id, function(err, question){
+      question.upvote.push(req.body.userid)
+      question.save(function(err){
+        if(err) throw err;
+        res.json(question)
+      })
+    })
+  },
+  questionDownvote: function(req, res){
+    let id = req.params.id
+    questions.findById(id, function(err, question){
+      question.downvote.push(req.body.userid)
       question.save(function(err){
         if(err) throw err;
         res.json(question)
