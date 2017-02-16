@@ -107,13 +107,13 @@ function detail(questionid){
               `<tr>
                 <td>${item.content}</td>
                 <td>
-                  <button onclick="upvoteAnswer('${item._id}', '${questionid}')" class="ui labeled positive icon button">
+                  <button onclick="upvoteAnswer('${item._id}','${questionid}')" class="ui labeled positive icon button">
                     <i class="thumbs up icon"></i>
                     ${item.upvote.length}
                   </button>
                 </td>
                 <td>
-                  <button onclick="downvoteAnswer('${item._id}', '${questionid}')" class="ui labeled negative icon button">
+                  <button onclick="downvoteAnswer('${item._id}','${questionid}')" class="ui labeled negative icon button">
                     <i class="thumbs down icon"></i>
                     ${item.downvote.length}
                   </button>
@@ -169,7 +169,7 @@ function upvoteAnswer(answerid, questionid){
     data: {userid: sessionStorage.getItem('userid')},
     success: function(data){
       console.log(data);
-      getAllQuestion()
+      $('.long.modal').modal('toggle')
     }
   })
 }
@@ -183,7 +183,7 @@ function downvoteAnswer(answerid, questionid){
     data: {userid: sessionStorage.getItem('userid')},
     success: function(data){
       console.log(data);
-      getAllQuestion()
+      $('.long.modal').modal('toggle')
     }
   })
 }
