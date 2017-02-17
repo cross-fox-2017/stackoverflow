@@ -4,10 +4,10 @@ var Schema = mongoose.Schema;
 var questionSchema = new Schema({
     title: String,
     text: String,
-    category:Schema.Types.Mixed,
-    postedBy: Schema.Types.Mixed ,
+    postedBy: Schema.Types.Mixed,
     answer: Schema.Types.Mixed,
-    vote:Number,
+    vote: Schema.Types.Mixed,
+    downvote: Schema.Types.Mixed,
     createdAt:Date
 });
 
