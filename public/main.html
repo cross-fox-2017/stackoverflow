@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Stackoverflow</title>
+  </head>
+  <!--Import Google Icon Font-->
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <body>
+    <nav class="teal lighten-1" role="navigation">
+      <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">My Blogs</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a class="logout" href="http://127.0.0.1:8080/">Logout</a></li>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+          <li><a class="logout" href="http://127.0.0.1:8080/">Logout</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
+
+    <div class="container" style="margin-top: 25px;">
+      <div class="section">
+        <div class="row">
+            <form id="add_blog" class="col s12">
+              <div class="row">
+                <div class="input-field col s6">
+                  <input placeholder="Input the title here" id="title" name="title" type="text" class="validate">
+                  <label for="title">Title</label>
+                </div>
+                <div class="input-field col s6">
+                  <input placeholder="Input the author name here" id="author" name="author" type="text" class="validate">
+                  <label for="author">Author</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea placeholder="Input the description name here" id="description" name="description" class="materialize-textarea"></textarea>
+                  <label for="textarea">Description</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <button id="submit_blog_add" class="waves-effect waves-light btn"><i class="material-icons left">input</i>Add Blog</button>
+                  <button id="submit_blog_update" class="waves-effect waves-light blue darken-1 btn"><i class="material-icons left">update</i>Update Blog</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+        <div class="row" id="global_message">
+
+        </div>
+
+        <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Description</th>
+            <th>Published At</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="table_content"></tbody>
+      </table>
+      </div>
+    </div>
+
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+  <script src="js/init.js"></script>
+  <script>
+  // clear the storage
+    $('.logout').click(function(){
+      window.localStorage.clear()
+    })
+  </script>
+  <script>
+  // function to reset the form
+  function resetForm($form) {
+    $form.find('input:text, input:password, input:file, select, textarea').val('');
+    $form.find('input:radio, input:checkbox')
+         .removeAttr('checked').removeAttr('selected');
+  }
+  </script>
+  <script>
+  // set global index
+  let index = 0
+
+  // Get all blog data after page load
+  $.ajax({
+    type: "GET",
+    url: "http://localhost:3000/api/blogs",
+    dataType: 'json',
+    success: function(data){
+      for(let i = 0; i < data.length; i++){
+        $('#table_content').append(
+          `
+          <tr>
+            <td class="title">${data[i].title}</td>
+            <td>${data[i].author}</td>
+            <td>${data[i].description}</td>
+            <td>${data[i].created_at}</td>
+            <td>
+              <button id="delete_blog_${i}" onclick="delete_blog('${data[i]._id}', ${i})" class="delete waves-effect waves-light red darken-1 btn"><i class="material-icons left">delete</i>Delete Blog</button>
+              <button id="update_blog_${i}" onclick="update_blog('${data[i]._id}', '${data[i].title}', '${data[i].author}', '${data[i].description}', ${i})" class="update waves-effect blue darken waves-light btn"><i class="material-icons left">update</i>Update Blog</button>
+            </td>
+          </tr>
+          `
+        )
+        index++
+      }
+    }
+  })
+  </script>
+  <script>
+  function delete_blog(id, i){
+    $.ajax({
+      type: 'DELETE',
+      url: 'http://localhost:3000/api/blogs/'+id,
+      dataType: 'json',
+      success: function(data){
+        $('#global_message').append(`<div class="transition card-panel red darken-1 col s12 message">${data.msg}</div>`)
+        $('#delete_blog_'+i).parents('tr').remove()
+        setTimeout(function(){
+          $('#global_message').html('')
+        }, 2500)
+      }
+    })
+  }
+  </script>
+  <script>
+  // add blog
+    $('#submit_blog_add').click(function(e){
+      e.preventDefault()
+      $.ajax({
+        type: 'POST',
+        url: 'http://localhost:3000/api/blogs',
+        data: $('#add_blog').serialize(),
+        dataType: 'json',
+        success: function(data){
+          $('#table_content').append(
+            `
+            <tr>
+              <td class="title">${data.title}</td>
+              <td>${data.author}</td>
+              <td>${data.description}</td>
+              <td>${data.created_at}</td>
+              <td>
+                <button id="delete_blog_${index}" onclick="delete_blog('${data._id}', ${index})" class="delete waves-effect waves-light red darken-1 btn"><i class="material-icons left">delete</i>Delete Blog</button>
+                <button id="update_blog_${index}" onclick="update_blog('${data._id}', '${data.title}', '${data.author}', '${data.description}', ${index})" class="update waves-effect blue darken waves-light btn"><i class="material-icons left">update</i>Update Blog</button>
+              </td>
+            </tr>
+            `
+          )
+          // add the global index
+          index++
+
+          // Message input success
+          $('#global_message').append(`<div class="card-panel teal lighten-2 col s12 message">Blog ${data.title} has been created!</div>`)
+
+          // Set timeout to remove message after 2.5 s
+          setTimeout(function(){
+            $('#global_message').html('')
+          }, 2500)
+
+          // reset form value
+          resetForm($('#add_blog'))
+        }
+
+      })
+    })
+  </script>
+
+  <script>
+  // update blog
+  $('#submit_blog_update').hide()
+    function update_blog(id, title, author, desc, i) {
+      $('#title').val(title)
+      $('#author').val(author)
+      $('#description').val(desc)
+      $('#submit_blog_add').hide()
+      $('#submit_blog_update').show()
+
+      console.log(desc);
+
+      $('#submit_blog_update').click(function(e){
+        e.preventDefault()
+
+        $.ajax({
+          type: 'PUT',
+          url: 'http://localhost:3000/api/blogs/'+id,
+          data: $('#add_blog').serialize(),
+          dataType: 'json',
+          success: function(data) {
+
+            // show button add & hide button update
+            // Last table row update using last and update the inner HTML
+            $('#submit_blog_add').show()
+            $('#submit_blog_update').hide()
+            $('#table_content tr').last().html(
+              `
+              <td class="title">${data.title}</td>
+              <td>${data.author}</td>
+              <td>${data.description}</td>
+              <td>${data.created_at}</td>
+              <td>
+                <button id="delete_blog_${index}" onclick="delete_blog('${data._id}', ${index-1})" class="delete waves-effect waves-light red darken-1 btn"><i class="material-icons left">delete</i>Delete Blog</button>
+                <button id="update_blog_${index}" onclick="update_blog('${data._id}', '${data.title}', '${data.author}', '${data.description}', ${index-1})" class="update waves-effect blue darken waves-light btn"><i class="material-icons left">update</i>Update Blog</button>
+              </td>
+              `
+            )
+
+	           // Message input success
+            $('#global_message').append(`<div class="transition card-panel teal lighten-2 col s12 message">Blog ${title} has been updated to ${data.title}</div>`)
+
+	           // Set timeout to remove message after 2.5 s
+            setTimeout(function(){
+              $('#global_message').html('')
+            }, 2500)
+
+	           // reset form value
+            resetForm($('#add_blog'))
+          }
+        })
+      })
+    }
+  </script>
+  </body>
+</html>
