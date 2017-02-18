@@ -8,6 +8,12 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const autoIncrement = require('mongoose-auto-increment')
 
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('Database connected!');
+});
+
 const connection = mongoose.connect('mongodb://localhost/stack_overflow')
 mongoose.Promise = global.Promise
 autoIncrement.initialize(connection)

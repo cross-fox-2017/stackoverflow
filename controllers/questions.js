@@ -4,18 +4,12 @@ const seedQuestions = require('../seeders/questions')
 
 module.exports = {
   seed: (req, res) => {
-    // mongoose.connection.db.dropCollection('questions', (err, result) => {
-    //   if (err) res.status(500).send(err)
-    //   else {
-    //     console.log('Dropped collection: Questions')
-    //     Questions.create(seedQuestions, (err, questions) => {
-    //       if (err) res.send(err)
-    //       else res.send(questions)
-    //     })
-    //   }
-    // })
+    Questions.remove(err => {
+      if (err) res.status(500).send(err)
+      else console.log('Dropped collection: Questions');
+    })
     Questions.create(seedQuestions, (err, questions) => {
-      if (err) res.send(err)
+      if (err) res.status(500).send(err)
       else res.send(questions)
     })
   },
