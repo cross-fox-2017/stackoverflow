@@ -165,19 +165,24 @@
 
   <script>
   let index = 0;
+  let getStringifyAnswersObj, getAnswersObj, objAnswer = {}, arrAnswer = [], getAnswerUserId, getAnswerContent, getUpvoteContent, getDownvoteContent;
   $.ajax({
     type: 'GET',
     url: 'http://localhost:3000/api/questions/',
     dataType: 'json',
     success: function(data){
-      console.log(data);
       for(let i = 0; i < data.length; i++) {
+
+        data[i].answers.forEach(function(x){
+          console.log(x.userId);
+        })
+
         $('#table_content').append(
           `
             <tr>
               <td>${data[i].upvote.length + data[i].downvote.length}</td>
               <td>${data[i].answers.length}</td>
-              <td> <a href="#answer" style="cursor:pointer">${data[i].title}</a></td>
+              <td><a href="#answer" onclick="details('${data[i].title}', '${data[i].content}', [1,2,3], ${data[i].upvote.length}, ${data[i].downvote.length})" style="cursor:pointer">${data[i].title}</a></td>
             </tr>
           `
         )
@@ -186,7 +191,13 @@
     }
   })
   </script>
+  <script>
+    function details(a,b,c,d,e) {
+      console.log(a,b ,d,e);
+      console.log('OBJECT: ' + c);
+    }
 
+  </script>
   <script>
     $('#submit_question_add').click(function(e){
       e.preventDefault()
