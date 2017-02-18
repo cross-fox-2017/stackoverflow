@@ -109,18 +109,30 @@
       <script>
       $('#login_button').click(function(e){
         e.preventDefault()
-
-        console.log($('#username').val());
-        console.log($('#password').val());
         $.ajax({
           type: 'POST',
           url: 'http://localhost:3000/api/users/signin',
-          data: $('#login').serialize(),
+          data: {
+            username: $('#username').val(),
+            password: $('#password').val()
+          },
           dataType: 'json',
           success: function(data){
             console.log(data);
-            location.href = "http://127.0.0.1:8080/main.html"
-            localStorage.setItem('jwt-token', data.token)
+            if(data.msg) {
+              $('#login_message').append(`<div id='login-msg' class="card-panel red lighten-2 col s12 message white-text">${data.msg}</div>`);
+              setTimeout(function(){
+                $('#login-msg').attr('style','opacity:0; visibility:hidden')
+              }, 2000)
+              setTimeout(function(){
+                $('#login_message').html(``)
+              }, 3000)
+            } else {
+              console.log(data.token);
+              localStorage.setItem('jwt-token', data.token)
+              localStorage.setItem('userId', data.id)
+              window.location.href = "http://localhost:3000/main.html";
+            }
           }
         })
       })

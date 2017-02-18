@@ -10,7 +10,7 @@ module.exports = {
     Users.remove(err => {
       if (err) res.status(500).send(err)
       else console.log('Dropped collection: Users')
-    });
+    })
     Users.create(seedUsers, (err, users) => {
       if (err) res.status(500).send(err)
       else res.send(users)
@@ -56,7 +56,9 @@ module.exports = {
       if (err) res.status(500).send(err)
 
       if (!passwordHash.verify(req.body.password, user.password)) {
-        res.send('Invalid Password!')
+        res.json({
+          msg: 'Invalid Password!'
+        })
       } else {
         let myToken = jwt.sign({
           id: user._id,
@@ -65,6 +67,7 @@ module.exports = {
           expiresIn: '24h'
         })
         res.json({
+          id: user._id,
           token: myToken
         })
       }

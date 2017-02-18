@@ -8,18 +8,18 @@
   <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/main.css">
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <body>
     <nav class="teal lighten-1" role="navigation">
-      <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">My Blogs</a>
+      <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Stack Overflow</a>
         <ul class="right hide-on-med-and-down">
-          <li><a class="logout" href="http://127.0.0.1:8080/">Logout</a></li>
+          <li><button class="teal accent-2 btn logout black-text">Logout</button></li>
         </ul>
 
         <ul id="nav-mobile" class="side-nav">
-          <li><a class="logout" href="http://127.0.0.1:8080/">Logout</a></li>
+          <li><button class="logout">Logout</a></button>
         </ul>
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
       </div>
@@ -28,27 +28,22 @@
     <div class="container" style="margin-top: 25px;">
       <div class="section">
         <div class="row">
-            <form id="add_blog" class="col s12">
+            <form id="add_question" class="col s12">
               <div class="row">
                 <div class="input-field col s6">
                   <input placeholder="Input the title here" id="title" name="title" type="text" class="validate">
                   <label for="title">Title</label>
                 </div>
-                <div class="input-field col s6">
-                  <input placeholder="Input the author name here" id="author" name="author" type="text" class="validate">
-                  <label for="author">Author</label>
-                </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea placeholder="Input the description name here" id="description" name="description" class="materialize-textarea"></textarea>
+                  <textarea placeholder="Input the content here" id="content" name="content" class="materialize-textarea"></textarea>
                   <label for="textarea">Description</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <button id="submit_blog_add" class="waves-effect waves-light btn"><i class="material-icons left">input</i>Add Blog</button>
-                  <button id="submit_blog_update" class="waves-effect waves-light blue darken-1 btn"><i class="material-icons left">update</i>Update Blog</button>
+                  <button id="submit_question_add" class="waves-effect waves-light btn"><i class="material-icons left">input</i>Add Question</button>
                 </div>
               </div>
             </form>
@@ -58,18 +53,83 @@
 
         </div>
 
+        <div class="row">
+          <h3>Questions</h3>
+        </div>
+
         <table>
         <thead>
           <tr>
+            <th>Vote</th>
+            <th>Answers</th>
             <th>Title</th>
-            <th>Author</th>
-            <th>Description</th>
-            <th>Published At</th>
-            <th>Action</th>
           </tr>
         </thead>
         <tbody id="table_content"></tbody>
       </table>
+
+      </div>
+    </div>
+
+    <div id="answer" class="modal" style="width:1200px">
+      <div class="modal-content">
+        <h4 id="question">Modal Header</h4>
+        <ul class="collection" style="margin-bottom: 35px">
+         <li class="collection-item avatar" style="padding-left:10px;">
+           <h5>Title</h5>
+           <hr class="hr-300">
+           <br>
+           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+           <a class="secondary-content" style="margin-right:100px;"><i class="material-icons">thumb_down</i></a>
+           <p class="secondary-content" style="margin-right:50px;">105</p>
+           <p class="secondary-content" style="margin-right:150px;">105</p>
+           <a class="secondary-content" style="margin-right:200px;"><i class="material-icons">thumb_up</i></a>
+         </li>
+       </ul>
+
+       <h5>Answers</h5>
+       <ul class="collection">
+         <li class="collection-item avatar" style="padding-left:10px;">
+           <h5>Title</h5>
+           <hr class="hr-300">
+           <br>
+           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+           <a class="secondary-content" style="margin-right:100px;"><i class="material-icons">thumb_down</i></a>
+           <p class="secondary-content" style="margin-right:50px;">105</p>
+           <p class="secondary-content" style="margin-right:150px;">105</p>
+           <a class="secondary-content" style="margin-right:200px;"><i class="material-icons">thumb_up</i></a>
+         </li>
+         <li class="collection-item avatar" style="padding-left:10px;">
+           <h5>Title</h5>
+           <hr class="hr-300">
+           <br>
+           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+           <a class="secondary-content" style="margin-right:100px;"><i class="material-icons">thumb_down</i></a>
+           <p class="secondary-content" style="margin-right:50px;">105</p>
+           <p class="secondary-content" style="margin-right:150px;">105</p>
+           <a class="secondary-content" style="margin-right:200px;"><i class="material-icons">thumb_up</i></a>
+         </li>
+       </ul>
+      </div>
+      <div class="modal-footer" style="padding: 0px 25px;">
+        <ul class="collection">
+          <li class="collection-item avatar" style="padding-left:10px;">
+            <div class="row">
+              <form class="col s12">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="textarea1" placeholder="Post your answer here" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <button class="waves-effect waves-light btn left"><i class="material-icons left">input</i>Submit Answer</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
 
@@ -79,10 +139,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
   <script src="js/init.js"></script>
   <script>
-  // clear the storage
+    $(document).ready(function(){
+      // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+      $('.modal').modal();
+    });
+
+    // Redirect to login page if jwt-token not exist!
+    if(!localStorage.getItem('jwt-token')) {
+      window.location.href = 'http://localhost:3000'
+    }
+
+    // clear the storage after logout
     $('.logout').click(function(){
-      window.localStorage.clear()
+      localStorage.clear()
+      window.location.href = 'http://localhost:3000'
     })
+
   </script>
   <script>
   // function to reset the form
@@ -93,28 +165,21 @@
   }
   </script>
   <script>
-  // set global index
-  let index = 0
-
-  // Get all blog data after page load
+  let index = 0;
   $.ajax({
-    type: "GET",
-    url: "http://localhost:3000/api/blogs",
+    type: 'GET',
+    url: 'http://localhost:3000/api/questions/',
     dataType: 'json',
     success: function(data){
-      for(let i = 0; i < data.length; i++){
+      console.log(data);
+      for(let i = 0; i < data.length; i++) {
         $('#table_content').append(
           `
-          <tr>
-            <td class="title">${data[i].title}</td>
-            <td>${data[i].author}</td>
-            <td>${data[i].description}</td>
-            <td>${data[i].created_at}</td>
-            <td>
-              <button id="delete_blog_${i}" onclick="delete_blog('${data[i]._id}', ${i})" class="delete waves-effect waves-light red darken-1 btn"><i class="material-icons left">delete</i>Delete Blog</button>
-              <button id="update_blog_${i}" onclick="update_blog('${data[i]._id}', '${data[i].title}', '${data[i].author}', '${data[i].description}', ${i})" class="update waves-effect blue darken waves-light btn"><i class="material-icons left">update</i>Update Blog</button>
-            </td>
-          </tr>
+            <tr>
+              <td>${data[i].upvote.length + data[i].downvote.length}</td>
+              <td>${data[i].answers.length}</td>
+              <td> <a href="#answer" style="cursor:pointer">${data[i].title}</a></td>
+            </tr>
           `
         )
         index++
@@ -123,117 +188,10 @@
   })
   </script>
   <script>
-  function delete_blog(id, i){
-    $.ajax({
-      type: 'DELETE',
-      url: 'http://localhost:3000/api/blogs/'+id,
-      dataType: 'json',
-      success: function(data){
-        $('#global_message').append(`<div class="transition card-panel red darken-1 col s12 message">${data.msg}</div>`)
-        $('#delete_blog_'+i).parents('tr').remove()
-        setTimeout(function(){
-          $('#global_message').html('')
-        }, 2500)
-      }
-    })
-  }
+
   </script>
   <script>
-  // add blog
-    $('#submit_blog_add').click(function(e){
-      e.preventDefault()
-      $.ajax({
-        type: 'POST',
-        url: 'http://localhost:3000/api/blogs',
-        data: $('#add_blog').serialize(),
-        dataType: 'json',
-        success: function(data){
-          $('#table_content').append(
-            `
-            <tr>
-              <td class="title">${data.title}</td>
-              <td>${data.author}</td>
-              <td>${data.description}</td>
-              <td>${data.created_at}</td>
-              <td>
-                <button id="delete_blog_${index}" onclick="delete_blog('${data._id}', ${index})" class="delete waves-effect waves-light red darken-1 btn"><i class="material-icons left">delete</i>Delete Blog</button>
-                <button id="update_blog_${index}" onclick="update_blog('${data._id}', '${data.title}', '${data.author}', '${data.description}', ${index})" class="update waves-effect blue darken waves-light btn"><i class="material-icons left">update</i>Update Blog</button>
-              </td>
-            </tr>
-            `
-          )
-          // add the global index
-          index++
 
-          // Message input success
-          $('#global_message').append(`<div class="card-panel teal lighten-2 col s12 message">Blog ${data.title} has been created!</div>`)
-
-          // Set timeout to remove message after 2.5 s
-          setTimeout(function(){
-            $('#global_message').html('')
-          }, 2500)
-
-          // reset form value
-          resetForm($('#add_blog'))
-        }
-
-      })
-    })
-  </script>
-
-  <script>
-  // update blog
-  $('#submit_blog_update').hide()
-    function update_blog(id, title, author, desc, i) {
-      $('#title').val(title)
-      $('#author').val(author)
-      $('#description').val(desc)
-      $('#submit_blog_add').hide()
-      $('#submit_blog_update').show()
-
-      console.log(desc);
-
-      $('#submit_blog_update').click(function(e){
-        e.preventDefault()
-
-        $.ajax({
-          type: 'PUT',
-          url: 'http://localhost:3000/api/blogs/'+id,
-          data: $('#add_blog').serialize(),
-          dataType: 'json',
-          success: function(data) {
-
-            // show button add & hide button update
-            // Last table row update using last and update the inner HTML
-            $('#submit_blog_add').show()
-            $('#submit_blog_update').hide()
-            $('#table_content tr').last().html(
-              `
-              <td class="title">${data.title}</td>
-              <td>${data.author}</td>
-              <td>${data.description}</td>
-              <td>${data.created_at}</td>
-              <td>
-                <button id="delete_blog_${index}" onclick="delete_blog('${data._id}', ${index-1})" class="delete waves-effect waves-light red darken-1 btn"><i class="material-icons left">delete</i>Delete Blog</button>
-                <button id="update_blog_${index}" onclick="update_blog('${data._id}', '${data.title}', '${data.author}', '${data.description}', ${index-1})" class="update waves-effect blue darken waves-light btn"><i class="material-icons left">update</i>Update Blog</button>
-              </td>
-              `
-            )
-
-	           // Message input success
-            $('#global_message').append(`<div class="transition card-panel teal lighten-2 col s12 message">Blog ${title} has been updated to ${data.title}</div>`)
-
-	           // Set timeout to remove message after 2.5 s
-            setTimeout(function(){
-              $('#global_message').html('')
-            }, 2500)
-
-	           // reset form value
-            resetForm($('#add_blog'))
-          }
-        })
-      })
-    }
   </script>
   </body>
 </html>
