@@ -31,13 +31,13 @@
             <form id="add_question" class="col s12">
               <div class="row">
                 <div class="input-field col s6">
-                  <input placeholder="Input the title here" id="title" name="title" type="text" class="validate">
+                  <input placeholder="Input the title here" id="title_question" name="title" type="text" class="validate">
                   <label for="title">Title</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea placeholder="Input the content here" id="content" name="content" class="materialize-textarea"></textarea>
+                  <textarea placeholder="Input the content here" id="content_question" name="content" class="materialize-textarea"></textarea>
                   <label for="textarea">Description</label>
                 </div>
               </div>
@@ -49,9 +49,7 @@
             </form>
           </div>
 
-        <div class="row" id="global_message">
-
-        </div>
+        <div class="row" id="global_message"></div>
 
         <div class="row">
           <h3>Questions</h3>
@@ -156,14 +154,15 @@
     })
 
   </script>
+
   <script>
   // function to reset the form
   function resetForm($form) {
     $form.find('input:text, input:password, input:file, select, textarea').val('');
-    $form.find('input:radio, input:checkbox')
-         .removeAttr('checked').removeAttr('selected');
+    $form.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
   }
   </script>
+
   <script>
   let index = 0;
   $.ajax({
@@ -187,9 +186,37 @@
     }
   })
   </script>
-  <script>
 
+  <script>
+    $('#submit_question_add').click(function(e){
+      e.preventDefault()
+      $.ajax({
+        type: 'POST',
+        url: 'http://localhost:3000/api/questions',
+        dataType: 'json',
+        data: {
+          userId: Number(localStorage.getItem('userId')),
+          title: $('#title_question').val(),
+          content: $('#content_question').val()
+        },
+        success: function(data) {
+          resetForm($('#add_question'))
+          $('#table_content').append(
+            `
+              <tr>
+                <td>${data.upvote.length + data.downvote.length}</td>
+                <td>${data.answers.length}</td>
+                <td> <a href="#answer" style="cursor:pointer">${data.title}</a></td>
+              </tr>
+            `
+          )
+          index++
+          console.log(index);
+        }
+      })
+    })
   </script>
+
   <script>
 
   </script>
