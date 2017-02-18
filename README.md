@@ -51,7 +51,7 @@ Stack Overflow is a question-answer site for developers. We can post a question 
 | `/api/users`        | `POST`  | Add a user  
 | `/api/users`        | `GET`   | Get users list            
 | `/api/users/:id`    | `DELETE`| Remove a user by `user ID`        
-| `/api/users/signin` | `POST`  | Add an answer by `question ID`  
+| `/api/users/signin` | `POST`  | User Signin and get jwt token in local storage
 
 ## Questions
 
@@ -60,7 +60,8 @@ Stack Overflow is a question-answer site for developers. We can post a question 
 | `/api/questions/seed`                           | `POST`  | Seed a question `key:'auth', value:'admin123'`                       
 | `/api/questions`                                | `POST`  | Add a question   
 | `/api/questions/:id`                            | `DELETE`| Delete a question by `question ID`             
-| `/api/questions`                                | `GET`   | Get questions list         
+| `/api/questions`                                | `GET`   | Get questions list     
+| `/api/questions/:id`                            | `GET`   | Get a question by ID      
 | `/api/questions/:id/answers`                    | `POST`  | Add an answer by `question ID`  
 | `/api/questions/:id/answers`                    | `PUT`   | Delete all answer by `question ID`
 | `/api/questions/:id/answers/:answerId/remove`   | `PUT`   | Remove an answer by `question ID` and  `answer ID`

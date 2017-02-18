@@ -9,22 +9,12 @@ body {
 }
 
 .message {
-  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 16px;
+  height: 50px;
   transition: 1s;
-}
-
-/*.hide {
-  transition: 1s;
-  visibility: hidden;
-  opacity: 0;
-}
-
-.show {
-  font-size: 18px;
   visibility: visible;
   opacity: 1;
-}*/
+}

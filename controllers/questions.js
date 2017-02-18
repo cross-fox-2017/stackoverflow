@@ -6,7 +6,7 @@ module.exports = {
   seed: (req, res) => {
     Questions.remove(err => {
       if (err) res.status(500).send(err)
-      else console.log('Dropped collection: Questions');
+      else console.log('Dropped collection: Questions')
     })
     Questions.create(seedQuestions, (err, questions) => {
       if (err) res.status(500).send(err)
@@ -18,6 +18,13 @@ module.exports = {
     Questions.find((err, questions) => {
       if (err) res.status(500).send(err)
       else res.send(questions)
+    })
+  },
+
+  getQuestion: (req, res) => {
+    Questions.findOne({ _id: req.params.id}, (err, question) => {
+      if (err) res.status(500).send(err)
+      else res.send(question)
     })
   },
 
@@ -95,7 +102,7 @@ module.exports = {
 
     Questions.findOne({ _id: req.params.id }, (err, data) => {
       if (err) res.status(500).send(err)
-      if(!data) {
+      if (!data) {
         res.send('Question ID not found!')
       }
       data.upvote.forEach(vote => {
@@ -109,14 +116,14 @@ module.exports = {
           { new: true }, (err, vote) => {
             if (err) res.status(500).send(err)
             res.send(vote)
-        })
+          })
       } else {
         Questions.findByIdAndUpdate(req.params.id,
           { $pull: { upvote: convertId } },
           { new: true }, (err, vote) => {
             if (err) res.status(500).send(err)
             res.send(vote)
-        })
+          })
       }
     })
   },
@@ -127,7 +134,7 @@ module.exports = {
 
     Questions.findOne({ _id: req.params.id }, (err, data) => {
       if (err) res.status(500).send(err)
-      if(!data) {
+      if (!data) {
         res.send('Question ID not found!')
       }
       data.downvote.forEach(vote => {
@@ -142,14 +149,14 @@ module.exports = {
           { new: true }, (err, vote) => {
             if (err) res.status(500).send(err)
             res.send(vote)
-        })
+          })
       } else {
         Questions.findByIdAndUpdate(req.params.id,
           { $pull: { downvote: convertId } },
           { new: true }, (err, vote) => {
             if (err) res.status(500).send(err)
             res.send(vote)
-        })
+          })
       }
     })
   },
@@ -161,7 +168,7 @@ module.exports = {
 
     Questions.findOne({ _id: req.params.id }, (err, data) => {
       if (err) res.status(500).send(err)
-      if(!data) {
+      if (!data) {
         res.send('Question ID not found!')
       }
 
@@ -206,7 +213,7 @@ module.exports = {
 
     Questions.findOne({ _id: req.params.id }, (err, data) => {
       if (err) res.status(500).send(err)
-      if(!data) {
+      if (!data) {
         res.send('Question ID not found!')
       }
 

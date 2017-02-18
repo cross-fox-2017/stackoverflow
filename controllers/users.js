@@ -56,7 +56,9 @@ module.exports = {
       if (err) res.status(500).send(err)
 
       if (!passwordHash.verify(req.body.password, user.password)) {
-        res.send('Invalid Password!')
+        res.json({
+          msg: 'Invalid Password!'
+        })
       } else {
         let myToken = jwt.sign({
           id: user._id,
@@ -64,7 +66,10 @@ module.exports = {
         }, 'secret', {
           expiresIn: '24h'
         })
-        res.send(myToken)
+        res.json({
+          id: user._id,
+          token: myToken
+        })
       }
     })
   }

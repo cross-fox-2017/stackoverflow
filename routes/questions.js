@@ -6,6 +6,7 @@ router.post('/seed', controller.seedKey, controller.seed)
 router.post('/', controller.add)
 router.delete('/:id', controller.remove)
 router.get('/', controller.list)
+router.get('/:id', controller.getQuestion)
 
 router.post('/:id/answers', controller.addAnswer)
 router.put('/:id/answers', controller.removeAllAnswer)
