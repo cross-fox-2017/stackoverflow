@@ -10,7 +10,7 @@ module.exports = {
     Users.remove(err => {
       if (err) res.status(500).send(err)
       else console.log('Dropped collection: Users')
-    });
+    })
     Users.create(seedUsers, (err, users) => {
       if (err) res.status(500).send(err)
       else res.send(users)
@@ -64,9 +64,7 @@ module.exports = {
         }, 'secret', {
           expiresIn: '24h'
         })
-        res.json({
-          token: myToken
-        })
+        res.send(myToken)
       }
     })
   }

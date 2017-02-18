@@ -6,7 +6,7 @@
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-
+      <link type="text/css" rel="stylesheet" href="css/login.css" media="screen,projection"/>
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
@@ -27,13 +27,11 @@
                     <br>
                     <div class="input-field col s10 offset-s1">
                       <i class="material-icons prefix">account_circle</i>
-                      <input id="username" type="text" name="username" class="validate center">
-                      <label for="username">Username</label>
+                      <input id="username" type="text" placeholder="Username" name="username" class="validate center">
                     </div>
                     <div class="input-field col s10 offset-s1" style="margin-bottom:30px;">
                       <i class="material-icons prefix">vpn_key</i>
-                      <input id="password" type="password" name="password" class="validate center">
-                      <label for="password">Password</label>
+                      <input id="password" type="password" placeholder="Password" name="password" class="validate center">
                     </div>
                     <div class="row">
                       <button class="waves-effect waves-light btn" id="login_button" type="submit"><i class="material-icons left">input</i>Submit</button>
@@ -45,20 +43,22 @@
 
               <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4" id="close_register"><i class="material-icons right">close</i></span>
-                <div id="register_message">
-                  <!-- <div class="card-panel teal lighten-2 col s10 message">abc</div> -->
-                </div>
+
                 <form id="input_register" class="col s12">
+                  <div id="register_message">
+                    <div id="register_success" class="card-panel teal lighten-2 col s12 message white-text" style="visibility:hidden; opacity:0;">Register Success!</div>
+                  </div>
+
                   <div class="row">
                     <br>
                     <div class="input-field col s10 offset-s1">
                       <i class="material-icons prefix">account_circle</i>
-                      <input id="register_username" type="text" name="username" class="validate center">
+                      <input id="register_username" placeholder="This will be your display name" type="text" name="username" class="validate center">
                       <label for="register_username">Username</label>
                     </div>
                     <div class="input-field col s10 offset-s1" style="margin-bottom:30px;">
                       <i class="material-icons prefix">vpn_key</i>
-                      <input id="register_password" type="password" name="password" class="validate center">
+                      <input id="register_password" placeholder="Please input your password" type="password" name="password" class="validate center">
                       <label for="register_password">Password</label>
                     </div>
                     <div class="row">
@@ -83,7 +83,6 @@
         })
         $('#close_register').click(function(){
           $('#card_height').css('height', '400px')
-          $('#register_message').html('')
           $('#register_password').val('')
           $('#register_username').val('')
         })
@@ -96,7 +95,10 @@
             data: $('#input_register').serialize(),
             dataType: 'json',
             success: function(data){
-              $('#register_message').append(`<div class="card-panel teal lighten-2 col s10 message">${data.msg}</div>`)
+              $('#register_success').attr('style','visibility:visible; opacity:1')
+              setTimeout(function(){
+                $('#register_success').attr('style','visibility:hidden; opacity:0')
+              }, 2500)
             }
           })
         })
