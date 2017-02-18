@@ -7,20 +7,20 @@ const seedUsers = require('../seeders/users')
 
 module.exports = {
   seed: (req, res) => {
-    mongoose.connection.db.dropCollection('users', (err, result) => {
-      if (err) res.status(500).send(err)
-      else {
-        console.log('Dropped collection: Users')
-        Users.create(seedUsers, (err, users) => {
-          if (err) res.status(500).send(err)
-          else res.send(users)
-        })
-      }
-    })
-  // Users.create(seedUsers, (err, users) => {
-  //   if (err) res.status(500).send(err)
-  //   else res.send(users)
-  // })
+    // mongoose.connection.db.dropCollection('users', (err, result) => {
+    //   if (err) res.status(500).send(err)
+    //   else {
+    //     console.log('Dropped collection: Users')
+    //     Users.create(seedUsers, (err, users) => {
+    //       if (err) res.status(500).send(err)
+    //       else res.send(users)
+    //     })
+    //   }
+    // })
+  Users.create(seedUsers, (err, users) => {
+    if (err) res.status(500).send(err)
+    else res.send(users)
+  })
   },
 
   seedKey: (req, res, next) => {

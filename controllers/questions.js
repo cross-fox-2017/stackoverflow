@@ -4,22 +4,26 @@ const seedQuestions = require('../seeders/questions')
 
 module.exports = {
   seed: (req, res) => {
-    mongoose.connection.db.dropCollection('questions', (err, result) => {
-      if (err) res.status(500).send(err)
-      else {
-        console.log('Dropped collection: Questions')
-        Questions.create(seedQuestions, (err, questions) => {
-          if (err) res.send(err)
-          else res.send(questions)
-        })
-      }
+    // mongoose.connection.db.dropCollection('questions', (err, result) => {
+    //   if (err) res.status(500).send(err)
+    //   else {
+    //     console.log('Dropped collection: Questions')
+    //     Questions.create(seedQuestions, (err, questions) => {
+    //       if (err) res.send(err)
+    //       else res.send(questions)
+    //     })
+    //   }
+    // })
+    Questions.create(seedQuestions, (err, questions) => {
+      if (err) res.send(err)
+      else res.send(questions)
     })
   },
 
   list: (req, res) => {
     Questions.find((err, questions) => {
       if (err) res.status(500).send(err)
-      res.send(questions)
+      else res.send(questions)
     })
   },
 
@@ -33,14 +37,14 @@ module.exports = {
       updatedAt: new Date()
     }, (err, question) => {
       if (err) res.status(500).send(err)
-      res.send(question)
+      else res.send(question)
     })
   },
 
   remove: (req, res) => {
     Questions.findByIdAndRemove(req.params.id, (err, question) => {
       if (err) res.status(500).send(err)
-      res.send(question)
+      else res.send(question)
     })
   },
 
@@ -57,8 +61,7 @@ module.exports = {
         }
       }
     }, {
-      new: true,
-      upsert: true
+      new: true
     }, (err, data) => {
       if (err) res.status(500).send(err)
       else res.send(data)
@@ -72,7 +75,7 @@ module.exports = {
       new: true
     }, (err, data) => {
       if (err) res.status(500).send(err)
-      res.send(data)
+      else res.send(data)
     })
   },
 
@@ -94,71 +97,89 @@ module.exports = {
 
   upvoteQuestion: (req, res) => {
     let upvoteCondition = true
+    let convertId = Number(req.body.id)
 
     Questions.findOne({ _id: req.params.id }, (err, data) => {
       if (err) res.status(500).send(err)
+      if(!data) {
+        res.send('Question ID not found!')
+      }
       data.upvote.forEach(vote => {
         if (vote == req.body.id) {
           upvoteCondition = false
         }
       })
       if (upvoteCondition) {
-        Questions.findByIdAndUpdate(req.params.id, {
-          $push: {
-            upvote: Number(req.body.id) // USER ID who upvote the question
-          }
-        }, {
-          new: true
-        }, (err, vote) => {
-          if (err) res.status(500).send(err)
-          res.send(vote)
+        Questions.findByIdAndUpdate(req.params.id,
+          { $push: { upvote: convertId } },
+          { new: true }, (err, vote) => {
+            if (err) res.status(500).send(err)
+            res.send(vote)
         })
       } else {
-        res.send('You cannot upvote the same question again!')
+        Questions.findByIdAndUpdate(req.params.id,
+          { $pull: { upvote: convertId } },
+          { new: true }, (err, vote) => {
+            if (err) res.status(500).send(err)
+            res.send(vote)
+        })
       }
     })
   },
 
   downvoteQuestion: (req, res) => {
     let downvoteCondition = true
+    let convertId = Number(req.body.id)
 
     Questions.findOne({ _id: req.params.id }, (err, data) => {
       if (err) res.status(500).send(err)
+      if(!data) {
+        res.send('Question ID not found!')
+      }
       data.downvote.forEach(vote => {
         if (vote == req.body.id) {
           downvoteCondition = false
         }
       })
+
       if (downvoteCondition) {
-        Questions.findByIdAndUpdate(req.params.id, {
-          $push: {
-            downvote: Number(req.body.id) // USER ID who downvote the question
-          }
-        }, {
-          new: true
-        }, (err, vote) => {
-          if (err) res.status(500).send(err)
-          res.send(vote)
+        Questions.findByIdAndUpdate(req.params.id,
+          { $push: { downvote: convertId } },
+          { new: true }, (err, vote) => {
+            if (err) res.status(500).send(err)
+            res.send(vote)
         })
       } else {
-        res.send('You cannot downvote the same question again!')
+        Questions.findByIdAndUpdate(req.params.id,
+          { $pull: { downvote: convertId } },
+          { new: true }, (err, vote) => {
+            if (err) res.status(500).send(err)
+            res.send(vote)
+        })
       }
     })
   },
 
   upvoteAnswer: (req, res) => {
     let answerCondition = true
-    let answerObj
+    let convertId = Number(req.body.id)
+    let answerObj, arr
 
     Questions.findOne({ _id: req.params.id }, (err, data) => {
       if (err) res.status(500).send(err)
+      if(!data) {
+        res.send('Question ID not found!')
+      }
 
+      // find an answer ID within a question by answerID
       data.answers.forEach(answer => {
         if (answer._id == req.params.answerId) {
           answerObj = answer
         }
       })
 
+      // Check if the User ID already exist in the vote array
+      // If exist set condition to false
       answerObj.upvote.forEach(upvote => {
         if (upvote == req.body.id) {
           answerCondition = false
@@ -166,30 +187,44 @@ module.exports = {
       })
 
       if (answerCondition) {
-        answerObj.upvote.push(Number(req.body.id))
+        answerObj.upvote.push(convertId)
         data.save((err, result) => {
           if (err) res.status(500).send(err)
           else res.send(result)
         })
       } else {
-        res.send('You cannot upvote the same answer again!')
+        arr = answerObj.upvote.filter(vote => vote !== convertId)
+
+        // set the filtered array into answerObj upvote and save it!
+        answerObj.upvote = arr
+        data.save((err, result) => {
+          if (err) res.status(500).send(err)
+          else res.send(result)
+        })
       }
     })
   },
 
   downvoteAnswer: (req, res) => {
     let answerCondition = true
-    let answerObj
+    let convertId = Number(req.body.id)
+    let answerObj, arr
 
     Questions.findOne({ _id: req.params.id }, (err, data) => {
       if (err) res.status(500).send(err)
+      if(!data) {
+        res.send('Question ID not found!')
+      }
 
+      // find an answer ID within a question by answerID
       data.answers.forEach(answer => {
         if (answer._id == req.params.answerId) {
           answerObj = answer
         }
       })
 
+      // Check if the User ID already exist in the vote array
+      // If exist set condition to false
       answerObj.downvote.forEach(downvote => {
         if (downvote == req.body.id) {
           answerCondition = false
@@ -197,13 +232,21 @@ module.exports = {
       })
 
       if (answerCondition) {
-        answerObj.downvote.push(Number(req.body.id))
+        answerObj.downvote.push(convertId)
+
         data.save((err, result) => {
           if (err) res.status(500).send(err)
           else res.send(result)
         })
       } else {
-        res.send('You cannot downvote the same answer again!')
+        arr = answerObj.downvote.filter(vote => vote !== convertId)
+
+        // set the filtered array into answerObj downvote and save it!
+        answerObj.downvote = arr
+        data.save((err, result) => {
+          if (err) res.status(500).send(err)
+          else res.send(result)
+        })
       }
     })
   },
