@@ -1,0 +1,20 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  height: 50px;
+  transition: 1s;
+  visibility: visible;
+  opacity: 1;
+}
