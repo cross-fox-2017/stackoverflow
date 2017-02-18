@@ -51,7 +51,7 @@ Stack Overflow is a question-answer site for developers. We can post a question 
 | `/api/users`        | `POST`  | Add a user  
 | `/api/users`        | `GET`   | Get users list            
 | `/api/users/:id`    | `DELETE`| Remove a user by `user ID`        
-| `/api/users/signin` | `POST`  | Add an answer by `question ID`  
+| `/api/users/signin` | `POST`  | User Signin and get jwt token in local storage
 
 ## Questions
 
