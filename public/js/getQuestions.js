@@ -1,4 +1,5 @@
 let index = 0
+let subIndex = 0
 $.ajax({
   type: 'GET',
   url: 'http://localhost:3000/api/questions/',
@@ -8,9 +9,9 @@ $.ajax({
       $('#table_content').append(
         `
           <tr>
-            <td>${data[i].upvote.length + data[i].downvote.length}</td>
-            <td>${data[i].answers.length}</td>
-            <td><a href="#answer" onclick="questionDetail(${data[i]._id})" style="cursor:pointer">${data[i].title}</a></td>
+            <td id="total_vote_${i}">${data[i].upvote.length + data[i].downvote.length}</td>
+            <td id="total_answer_${i}">${data[i].answers.length}</td>
+            <td><a href="#answer" onclick="questionDetail(${data[i]._id}, ${index})" style="cursor:pointer">${data[i].title}</a></td>
           </tr>
         `
       )

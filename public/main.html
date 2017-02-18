@@ -51,16 +51,12 @@
 
         <div class="row" id="global_message"></div>
 
-        <div class="row">
-          <h3>Questions</h3>
-        </div>
-
         <table>
         <thead>
           <tr>
-            <th>Vote</th>
-            <th>Answers</th>
-            <th>Title</th>
+            <th style="width:7%">Votes</th>
+            <th style="width:10%">Answers</th>
+            <th>Question Title</th>
           </tr>
         </thead>
         <tbody id="table_content"></tbody>
@@ -72,48 +68,30 @@
     <div id="answer" class="modal" style="width:1200px">
       <div class="modal-content">
         <h5>Question</h5>
-        <ul class="collection" style="margin-bottom: 35px">
-         <li class="collection-item avatar" style="padding-left:10px;">
-           <h5 id="question_title"></h5>
-           <hr class="hr-300">
-           <br>
-           <p id="question_content"></p>
-           <button id="question_upvote_button" class="secondary-content btn" style="margin-right:60px;"><i class="material-icons">thumb_down</i></button>
-           <p id="question_upvote" class="secondary-content" style="margin-right:10px;"></p>
-           <p id="question_downvote" class="secondary-content" style="margin-right:175px;"></p>
-           <button id="question_downvote_button" class="secondary-content btn" style="margin-right:220px;"><i class="material-icons">thumb_up</i></button>
-         </li>
-       </ul>
+        <ul id="question_list" class="collection" style="margin-bottom: 35px">
+          <li class="collection-item avatar" style="padding-left:10px;">
+            <h5 id="question_title"></h5>
+            <hr class="hr-300">
+            <br>
+            <p id="question_content"></p>
+            <button id="question_downvote_button" class="secondary-content btn" style="margin-right:60px;"><i class="material-icons">thumb_down</i></button>
+            <p id="question_downvote" class="secondary-content" style="margin-right:10px;"></p>
+            <p id="question_upvote" class="secondary-content" style="margin-right:175px;"></p>
+            <button id="question_upvote_button" class="secondary-content btn" style="margin-right:220px;"><i class="material-icons">thumb_up</i></button>
+          </li>
+        </ul>
 
-       <h5>Answers</h5>
-       <ul class="collection">
-         <li class="collection-item avatar" style="padding-left:10px;">
-           <h5>Title</h5>
-           <hr class="hr-300">
-           <br>
-           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-           <button class="secondary-content btn" style="margin-right:60px;"><i class="material-icons">thumb_down</i></button>
-           <p class="secondary-content" style="margin-right:10px;">105</p>
-           <p class="secondary-content" style="margin-right:175px;">105</p>
-           <button class="secondary-content btn" style="margin-right:220px;"><i class="material-icons">thumb_up</i></button>
-         </li>
-       </ul>
+        <h5>Answers</h5>
+        <ul id="answers_list" class="collection">
+
+        </ul>
       </div>
       <div class="modal-footer" style="padding: 0px 25px;">
         <ul class="collection">
           <li class="collection-item avatar" style="padding-left:10px;">
             <div class="row">
-              <form class="col s12">
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input id="textarea1" placeholder="Post your answer here" />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <button class="waves-effect waves-light btn left"><i class="material-icons left">input</i>Submit Answer</button>
-                  </div>
-                </div>
+              <form id="answer_form" class="col s12">
+
               </form>
             </div>
           </li>
@@ -131,22 +109,91 @@
   <script src="js/getQuestions.js"></script>
   <script src="js/addQuestion.js"></script>
   <script>
-    function questionDetail(id) {
+    function questionDetail(id, index) {
       $.ajax({
         type: "GET",
         url: "http://localhost:3000/api/questions/"+id,
         dataType: 'json',
         success: function(data) {
+          subIndex = 0
           $('#question_title').html(data.title)
           $('#question_content').html(data.content)
           $('#question_upvote').html(data.upvote.length)
           $('#question_downvote').html(data.downvote.length)
 
-          $('#question_upvote_button').attr('onclick',`upvoteQuestion(${data._id}, ${userId})`)
-          $('#question_downvote_button').attr('onclick',`downvoteQuestion(${data._id}, ${userId})`)
+          $('#question_upvote_button').attr('onclick',`upvoteQuestion(${data._id}, ${userId}, ${index})`)
+          $('#question_downvote_button').attr('onclick',`downvoteQuestion(${data._id}, ${userId}, ${index})`)
+          for(let i = 0; i < data.answers.length; i++){
+            $('#answers_list').append(
+              `
+                <li class="collection-item avatar" style="padding-left:10px;">
+                  <h5 id="question_title">${data.title}</h5>
+                  <hr class="hr-300">
+                  <br>
+                  <p>${data.answers[i].content}</p>
+                  <button onclick="downvoteAnswer(${data._id}, '${data.answers[i]._id}', ${userId}, ${index}, ${i})" class="secondary-content btn" style="margin-right:60px;"><i class="material-icons">thumb_down</i></button>
+                  <p id="answer_downvote_${index}_${i}" class="secondary-content" style="margin-right:10px;">${data.answers[i].downvote.length}</p>
+                  <p id="answer_upvote_${index}_${i}" class="secondary-content" style="margin-right:175px;">${data.answers[i].upvote.length}</p>
+                  <button onclick="upvoteAnswer(${data._id}, '${data.answers[i]._id}', ${userId}, ${index}, ${i})" class="secondary-content btn" style="margin-right:220px;"><i class="material-icons">thumb_up</i></button>
+                </li>
+              `
+            )
+            subIndex++
+          }
+          $('#answer_form').html(
+            `
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="input_answer" placeholder="Post your answer here" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <button onclick="submitAnswer(${data._id}, ${userId}, ${index}, ${subIndex}); return false;" class="waves-effect waves-light btn left"><i class="material-icons left">input</i>Submit Answer</button>
+                </div>
+              </div>
+            `
+          )
         }
       })
     }
+  </script>
+
+  <script src="js/vote.js"></script>
+
+  <script>
+  let answerIncrement = 0
+    function submitAnswer(id, userId, index, subIndex) {
+      subIndex += answerIncrement
+      let answer = $('#input_answer').val()
+      $.ajax({
+        type: 'POST',
+        url: `http://localhost:3000/api/questions/${id}/answers`,
+        dataType: 'json',
+        data: {
+          userId: userId,
+          content: answer
+        },
+        success: function(data) {
+          $('#answers_list').append(
+            `
+              <li class="collection-item avatar" style="padding-left:10px;">
+                <h5 id="question_title">${data.title}</h5>
+                <hr class="hr-300">
+                <br>
+                <p>${data.answers[subIndex].content}</p>
+                <button onclick="downvoteAnswer(${data._id}, '${data.answers[subIndex]._id}', ${userId}, ${index}, ${subIndex})" class="secondary-content btn" style="margin-right:60px;"><i class="material-icons">thumb_down</i></button>
+                <p id="answer_downvote_${index}_${subIndex}" class="secondary-content" style="margin-right:10px;">${data.answers[subIndex].downvote.length}</p>
+                <p id="answer_upvote_${index}_${subIndex}" class="secondary-content" style="margin-right:175px;">${data.answers[subIndex].upvote.length}</p>
+                <button onclick="upvoteAnswer(${data._id}, '${data.answers[subIndex]._id}', ${userId}, ${index}, ${subIndex})" class="secondary-content btn" style="margin-right:220px;"><i class="material-icons">thumb_up</i></button>
+              </li>
+            `
+          )
+          answerIncrement++
+        }
+      })
+    }
+
   </script>
   </body>
 </html>

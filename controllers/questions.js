@@ -130,8 +130,10 @@ module.exports = {
 
   downvoteQuestion: (req, res) => {
     let downvoteCondition = true
+    console.log(req.body.id)
     let convertId = Number(req.body.id)
 
+    console.log(convertId)
     Questions.findOne({ _id: req.params.id }, (err, data) => {
       if (err) res.status(500).send(err)
       if (!data) {

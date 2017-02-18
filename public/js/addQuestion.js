@@ -21,7 +21,20 @@ $('#submit_question_add').click(function (e) {
         `
       )
       index++
-      console.log(index)
+
+      // SET global message
+      $('#global_message').html(
+        `
+          <div id='question_success' class="card-panel teal lighten-2 col s12 message white-text">Post Question Success!</div>
+        `
+      )
+      setTimeout(function () {
+        $('#question_success').attr('style', 'opacity:0; visibility:hidden')
+      }, 2000)
+      setTimeout(function () {
+        $('#question_success').attr('style', 'display:none')
+        $('#question_success').html(``)
+      }, 3000)
     }
   })
 })
