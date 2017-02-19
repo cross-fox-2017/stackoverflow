@@ -1,12 +1,13 @@
-# stackoverflow
+var express = require('express')
+var router = express.Router()
+const userController = require('../controllers/users')
+const questionController = require('../controllers/questions')
+const answerController = require('../controllers/answers')
+const voteAnswerController = require('../controllers/vote_answers')
+const voteQuestionController = require('../controllers/vote_questions')
 
-## Information
+/* GET home page. */
 
-Mini version of stackoverflow using sequelize
-
-## Routes
-
-```
 router.get('/', function (req, res, next) {
   res.send('Go to http://localhost:8080/')
 })
@@ -91,4 +92,4 @@ router.put('/api/votequestions/:id', voteQuestionController.updateVoteQuestion)
 
 router.delete('/api/votequestions/:id', voteQuestionController.deleteVoteQuestion)
 
-```
+module.exports = router

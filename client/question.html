@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Mini Stackoverflow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link href="index.css" type="text/css" rel="stylesheet">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+
+    <nav class="navbar">
+      <div class="nav-wrapper" style="margin-top:10px;">
+        <a href="/home.html" class="brand-logo">Mini Stackoverflow</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a id="nav-username" style="margin: 0px 20px 0px 0px; font-size:20px;"></a></li>
+          <li><a href="/home.html" class="btn light-blue darken-3">Back to Home</a></li>
+          <li><button id="logout" class="btn red darken-4">Logout</button></li>
+        </ul>
+      </div>
+    </nav>
+    <br>
+
+    <div class="row" style="margin: 20px 100px;">
+      <div id="question">
+        <label style="color:#0277bd; font-size:20px;">Title:</label>
+        <hr>
+        <h4 style="margin-top:10px;" id="question-title"></h4>
+        <p style="height: 280px; padding:10px; margin: 10px 0px; border-radius: 4px; border: 1px solid grey;" id="question-content"></p>
+      </div>
+      <br>
+
+      <label style="color:#0277bd; font-size:20px;">Answers:</label>
+      <div id="answers-list">
+
+      </div>
+      <br>
+      <br>
+      <br>
+
+      <div>
+        <form method="post">
+          <h5 style="color: #006666;">Post Answer</h5>
+          <hr style="border: 2px solid #006666;">
+          <br>
+          <div class="form-group">
+            <label for="content_reply">Content:</label>
+            <textarea name="content_reply" id="content_reply" style="height: 280px; padding:10px; margin: 10px 0px; border-radius: 4px; border-color: grey;" placeholder="Answer's details..."></textarea>
+          </div>
+          <br>
+          <button type="button" onclick="addAnswer()" class="btn teal darken-3">Add Answer</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script src="question.js"></script>
+  </body>
+</html>

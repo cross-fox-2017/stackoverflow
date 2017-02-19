@@ -1,0 +1,25 @@
+{
+  "development": {
+    "username": "kaioo",
+    "password": null,
+    "database": "stackoverflow",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "logging": false
+  },
+  "test": {
+    "username": "kaioo",
+    "password": null,
+    "database": "stackoverflow",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "kaioo",
+    "password": null,
+    "database": "stackoverflow",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "secret": "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+}
