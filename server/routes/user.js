@@ -1,16 +1,15 @@
-var express = require('express');
-var router = express.Router();
-const Users = require('../controllers/users')
+const express = require('express');
+const router = express.Router()
+const Users = require('../controllers/users');
+const DataUsers = require('../helpers/user');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
 
-router.post('/api/login',Users.login)
+router.post('/register',Users.register)
 
-router.post('/api/register',Users.register)
+router.post('/login',Users.login)
 
-router.delete('/api/delete',Users.delete)
+router.post('/decode',DataUsers.decode)
 
-module.exports = router;
+router.get('/getAll',Users.getAll)
+
+module.exports = router

@@ -1,13 +1,15 @@
-const modelsArtikel = require('../models/artikel');
+const modelsQuestion = require('../models/questions');
 
-var Artikels = {
+var Question = {
   add: function(req, res, next) {
-    var addArtikel = new modelsArtikel({
+    var addQuestion = new modelsQuestion({
+      idUser: req.body.idUser,
       title: req.body.title,
-      isi: req.body.isi,
-      author: req.body.author
+      description: req.body.description,
+      idVote: [],
+      idAnswers: []
     })
-    addArtikel.save(function(err, result) {
+    addQuestion.save(function(err, result) {
         if(err){
           res.send(err)
         }else{
@@ -15,15 +17,16 @@ var Artikels = {
         }
     })
   },
+
   show: function(req, res, next) {
-    modelsArtikel.find({},function(err, data) {
+    modelsQuestion.find({},function(err, data) {
         res.send(data)
     })
   },
   delete: function(req, res, next) {
     var arrId = JSON.parse(req.body.arrId)
     arrId.forEach(function(idArtikel) {
-      modelsArtikel.findByIdAndRemove(idArtikel, function(err) {
+      modelsQuestion.findByIdAndRemove(idArtikel, function(err) {
           if(err)res.send(err)
       })
     })
@@ -32,7 +35,7 @@ var Artikels = {
     })
   },
   update: function(req, res, next) {
-    modelsArtikel.findOneAndUpdate({
+    modelsQuestion.findOneAndUpdate({
       _id: req.body.id
     },{
       title: req.body.title,
@@ -47,6 +50,7 @@ var Artikels = {
         }
     })
   }
+
 }
 
-module.exports = Artikels
+module.exports = Question
