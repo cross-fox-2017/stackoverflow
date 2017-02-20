@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -9,63 +10,48 @@
     <link rel="stylesheet" href="/css/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="/css/sweetalert.css">
     <link rel="stylesheet" href="/css/stylehome.css">
+    <!-- <script src="http://cloud.tinymce.com/stable/tinymce.min.js"></script> -->
     <script src="http://cloud.tinymce.com/stable/tinymce.min.js?apiKey=zeje1w5mflf5rypct29l1gi197zwkb6nswwwq8re1hb01m9i"></script>
-    <script>tinymce.init({ selector:'textarea' });</script>
+    <script>
+        tinymce.init({
+            selector: 'textarea'
+        });
+    </script>
     <title>Stackoverflow</title>
 </head>
 
 <body>
     <div class="container">
-      <nav id="navigation-bar" class="navbar navbar-default">
-          <ul id="navigation-links">
-              <!-- <li><img src="http://lmsotfy.com/so.png" alt=""></li> -->
-              <li><a id="logo" href="#">Stack overflow</a></li>
-              <li><a href="/">Home</a></li>
-              <li><a href="/create_questions.html">Create Questions</a></li>
-                  <div class="ui icon input">
-                      <input type="text" placeholder="Search...">
-                      <i class="circular search link icon"></i>
-                  </div>
-                  <li id="register" class="navbar-right"><a href="/register.html">Sign up</a></li>
-                  <li id="login" class="navbar-right"><a href="/login.html">Login</a></li>
-          </ul>
-      </nav>
+        <nav id="navigation-bar" class="navbar navbar-default">
+            <ul id="navigation-links">
+                <!-- <li><img src="http://lmsotfy.com/so.png" alt=""></li> -->
+                <li><a id="logo" href="#">Stack overflow</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/create_questions.html">Create Questions</a></li>
+                <div class="ui icon input">
+                    <input type="text" placeholder="Search...">
+                    <i class="circular search link icon"></i>
+                </div>
+                <li id="register" class="navbar-right"><a href="/register.html">Sign up</a></li>
+                <li id="login" class="navbar-right"><a href="/login.html">Login</a></li>
+            </ul>
+        </nav>
         <img class="imageHome" src="http://i.imgur.com/ph1yogr.jpg">
 
         <div class="ui two column grid">
-            <div class="ui one column grid voteQues">
+            <div id="listdetail" class="ui one column grid voteQues">
+                <div id="listquestion">
 
-                <div class="question ui grid">
-                    <div class="voteAns">
-                        <div>
-                            <h3>0</h3> Votes
-                        </div>
-                          <button class="ui toggle button active">Voted</button>
-                    </div>
-                    <div class="Ques">
-                        <a href="#">
-                            <div>Which tools and technologies are used to build the Stack Exchange Network?</div>
-                        </a>
-                        <p>What tools and technologies are used to build the Stack Exchange Network?</p>
-                    </div>
                 </div>
-                <h3>Total Answers 1</h3><br>
-                <div class="answer ui grid">
-                    <div class="voteAns">
-                        <div>
-                            <h3>0</h3> Votes
-                        </div>
-                          <button class="ui toggle button active">Voted</button>
-                    </div>
-                    <div class="Ques">
-                        <div>You could use url_encode() to make sure every chars could be passed to an url and urldecode() to get the chars back.</div>
-                    </div>
+                <div id="listanswer">
+
                 </div>
+
                 <div class="textAnswer">
-                  <textarea></textarea>
+                    <textarea></textarea>
                 </div>
                 <div class="buttonAnswer">
-                    <button class="ui blue button">Post Your Answer</button>
+                    <button onclick="answer()" class="ui blue button">Post Your Answer</button>
                 </div>
 
 
@@ -92,6 +78,7 @@
     <script src="./js/sweetalert.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="./js/index.js"></script>
+    <script type="text/javascript" src="./js/question_detail.js"></script>
     <script type="text/javascript" src="./js/semantic.min.js"></script>
 </body>
 

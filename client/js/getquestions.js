@@ -20,7 +20,7 @@ $(document).ready(function() {
                       </div>
                   </div>
                   <div class="Ques">
-                      <a href="#">
+                      <a onclick="questionDetails('${result[i]._id}')" href="/question_detail.html">
                           <div>${result[i].title}</div>
                       </a>
                       <p>${result[i].description}</p>
@@ -34,3 +34,7 @@ $(document).ready(function() {
       }
   })
 })
+
+function questionDetails(idQuestions) {
+  localStorage.setItem("idQuestions", idQuestions)
+}

@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors')//tambahan agar halaman bisa diakses dari client
 var user = require('./routes/user');
 var questions = require('./routes/question')
+var answers = require('./routes/answer')
 var jwt = require('jsonwebtoken')
 const mongoose = require('mongoose');
 
@@ -31,6 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', user);
 app.use('/questions',questions)
+app.use('/answers',answers)
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
