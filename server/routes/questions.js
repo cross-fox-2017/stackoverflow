@@ -10,4 +10,5 @@ router.put('/:id/voteq/:username',question.voteQuestion)
 router.put('/:id/voteans/:ansid/:username',question.voteAnswer)
 router.put('/:id/downvoteq/:username',question.downvoteQuestion)
 router.put('/:id/downvoteans/:ansid/:username',question.downvoteAnswer)
+router.delete('/',question.delete)
 module.exports = router;

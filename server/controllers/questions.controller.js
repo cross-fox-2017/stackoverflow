@@ -3,6 +3,9 @@ var mongoose = require('mongoose');
 
 function voteQ(updown,id,username,callback){
   var cek= false;
+  if(username===undefined){
+    cek=true;
+  }
   Question.findOne({_id:id},function(err,v){
     if(err){
       return error('ga nemu')
@@ -27,7 +30,7 @@ function voteQ(updown,id,username,callback){
         })
       }
       else{
-        return callback('anda sudah vote')
+        return callback('anda tidak dapat melakukan vote')
       }
     }
   })
@@ -36,6 +39,9 @@ function voteQ(updown,id,username,callback){
 function voteA(updown,id,ansid,username,callback){
   var arr
   var check = false
+  if(username===undefined){
+    check=true;
+  }
   Question.findOne({_id:id},function(err,q){
     q.answer.forEach(function(a){
       if(a._id==ansid){
@@ -60,7 +66,7 @@ function voteA(updown,id,ansid,username,callback){
       })
     }
     else{
-      return callback('anda sudah vote')
+      return callback('anda tidak dapat melakukan vote')
     }
   })
 }
@@ -85,7 +91,7 @@ module.exports={
   },
 
   show: function(req,res){
-    Question.find({_id:req.params.id},function(err,q)
+    Question.findOne({_id:req.params.id},function(err,q)
     {
       if(err) throw err;
       res.json(q)
@@ -128,6 +134,17 @@ module.exports={
       }
     })
 
+  },
+
+  delete:function(req,res){
+    Question.remove({},function(err){
+      if(err){
+        res.send(err)
+      }
+      else{
+        res.send('done deleting')
+      }
+    })
   },
 
   voteQuestion: function(req,res){

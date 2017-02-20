@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Sansita" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <title>Document</title>
+  <style>
+  body {
+    font-family: 'Sansita', serif;
+    font-size: 30px;
+  }
+  p.breakword {
+      word-wrap: break-word;
+  }
+</style>
+
+</head>
+<body>
+  <div id="modalmodalan" class="modal">
+  <div class="modal-content">
+    <h3>Add new Answer</h3>
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s12">
+            <textarea id="answer" class="materialize-textarea"></textarea>
+            <label class="active" for="textarea1">Answer</label>
+          </div>
+        </div>
+      </form>
+      <a href="#!" id="addnew" class="waves-effect waves-light btn modal-close " onclick="addA()">submit</a>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+  </div>
+</div>
+  <nav>
+    <div class="nav-wrapper black">
+      <div class="container">
+        <a href="home.html" class="brand-logo">stuk operpelow</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li id="log"></li>
+          <li id="add"></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2> questions: </h2>
+  <div id="Question" class="row">
+    <div id="questions" class="row">
+
+    </div>
+    <h2> answers: </h2>
+    <div id="answers" class="row">
+
+    </div>
+  </div>
+  </div>
+</body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    show()
+
+    var token = localStorage.getItem("token")
+    if(token){
+      $('#log').empty()
+      $('#log').append(`<a href="#" onclick="logout()">Logout</a>`)
+
+
+    }
+    if(!token){
+      $('#add').empty()
+      $('#log').append(`<a href="login.html">Login</a>`)
+    }
+    $('.modal').modal();
+  })
+var user = localStorage.getItem("user")
+  function logout(){
+    localStorage.clear()
+    $('#log').empty()
+    $('#add').empty()
+    $('#log').append(`<a href="login.html">Login</a>`)
+  }
+
+  function show(){
+    var art = localStorage.getItem("articleId")
+    $.ajax({
+      type: 'GET',
+      url: `http://localhost:3000/questions/${art}`,
+      success: function(resp) {
+        $("#questions").empty()
+        $("#answers").empty()
+        var voteq = Number(resp.vote.length - resp.downvote.length)
+        console.log(voteq);
+        $("#questions").append(`      <div class="col s12 m12" >
+                <div class="single card">
+                  <div class="card-content black-text">
+                    <span class="card-title" name="idpost" >${resp.title}</span>
+                    <p class="breakword">${resp.text}</p>
+                  </div>
+                  <div class="card-action">
+                    <a class="waves-effect waves-light btn" name="upvote" onclick="upvote('${art}')" >Upvote</a>
+                    <a class="waves-effect waves-light red btn" name="downvote" onclick="downvote('${art}')">Downvote</a>
+                    <a href ="#modalmodalan" class="waves-effect waves-light blue btn" name="downvote">Answer</a>
+                    <p name="downvote">votes:${voteq}</p>
+                  </div>
+                </div>
+              </div>`)
+        if(resp.answer[0]!==undefined){
+          resp.answer.forEach(function(data){
+            var vote = Number(data.vote.length - data.downvote.length)
+            $("#answers").prepend(`<div class="row">
+            <div class="col s12 m12" id="data-${data._id}">
+            <div class="single card">
+            <div class="card-content black-text">
+            <p>answered by : ${data.postedBy.username}</p>
+            <p class="breakword" >${data.text}</p>
+            </div>
+            <div class="card-action">
+            <a class="waves-effect waves-light btn" name="upvote2" onclick="upvote2('${data._id}')" >Upvote</a>
+            <a class="waves-effect waves-light red btn" name="downvote2" onclick="downvote2('${data._id}')">Downvote</a>
+            <p name="downvote">votes:${vote}</p>
+            </div>
+            </div>
+            </div>
+            </div>`)
+          })
+        }
+
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  }
+
+  function upvote(id){
+    $.ajax({
+      type: 'PUT',
+      url: `http://localhost:3000/questions/${id}/voteq/${user}`,
+      success: function(resp) {
+        if(resp==='anda tidak dapat melakukan vote'){
+          alert(resp)
+        }
+        else{
+          show()
+        }
+
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  }
+  function downvote(id){
+    $.ajax({
+      type: 'PUT',
+      url: `http://localhost:3000/questions/${id}/downvoteq/${user}`,
+      success: function(resp) {
+        if(resp==='anda tidak dapat melakukan vote'){
+          alert(resp)
+        }
+        else{
+          show()
+        }
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  }
+  var artId = localStorage.getItem("articleId")
+  function addA(){
+    $.ajax({
+      type: 'PUT',
+      url: `http://localhost:3000/questions/${artId}/addAnswer/${user}`,
+      data: {text:$("#answer").val()},
+      success: function(resp) {
+        show()
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  }
+  function upvote2(id){
+    $.ajax({
+      type: 'PUT',
+      url: `http://localhost:3000/questions/${artId}/voteans/${id}/${user}`,
+      success: function(resp) {
+        if(resp==='anda tidak dapat melakukan vote'){
+          alert(resp)
+        }
+        else{
+          show()
+        }
+
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  }
+  function downvote2(id){
+    $.ajax({
+      type: 'PUT',
+      url: `http://localhost:3000/questions/${artId}/downvoteans/${id}/${user}`,
+      success: function(resp) {
+        if(resp==='anda tidak dapat melakukan vote'){
+          alert(resp)
+        }
+        else{
+          show()
+        }
+
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  }
+
+</script>
+</html>

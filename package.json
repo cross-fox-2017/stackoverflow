@@ -1,0 +1,31 @@
+{
+  "name": "stackoverflow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timocodex/stackoverflow.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/timocodex/stackoverflow/issues"
+  },
+  "homepage": "https://github.com/timocodex/stackoverflow#readme",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "cors": "^2.8.1",
+    "express": "^4.14.1",
+    "jsonwebtoken": "^7.3.0",
+    "mongod": "^2.0.0",
+    "mongodb": "^2.2.24",
+    "mongoose": "^4.8.2",
+    "nodemon": "^1.11.0"
+  }
+}

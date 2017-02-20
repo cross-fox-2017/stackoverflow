@@ -11,7 +11,7 @@ module.exports ={
     })
     newUser.save(function(err){
       if(err){
-        res.send('error')
+        res.send(err)
       }
       else{
         res.json(newUser)
@@ -21,6 +21,7 @@ module.exports ={
 
   login: function(req,res){
     User.find({username: req.body.username}).then(function(user){
+
       if(!user){
         res.json({ success: false, message: 'Authentication failed. no such username.' });
       }
@@ -32,7 +33,8 @@ module.exports ={
         res.json(
           {
             success: true,
-            token: token
+            token: token,
+            user: user[0].username
           }
         );
       }
