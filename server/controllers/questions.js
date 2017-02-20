@@ -71,8 +71,8 @@ var Question = {
         }
       },{
         new: true
-      }).then(function() {
-          res.send(true)
+      }).then(function(result) {
+          res.send(result)
       })
     }
 

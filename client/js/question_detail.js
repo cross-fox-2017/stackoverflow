@@ -11,9 +11,11 @@ $(document).ready(function() {
           <div class="question ui grid">
               <div class="voteAns">
                   <div>
-                      <h3>${result[0].idVote.length}</h3> Votes
+                      <h3 id="voteIdQuestion" >${result[0].idVote.length}</h3> Votes
                   </div>
-                    <button class="ui toggle button active">Voted</button>
+                  <div id="btnquestionvote">
+                    <button onclick="questionVote('${result[0]._id}')" class="ui toggle button active">Upvote</button>
+                  </div>
               </div>
               <div class="Ques">
                   <a href="#">
@@ -31,9 +33,11 @@ $(document).ready(function() {
               <div class="answer ui grid">
                   <div class="voteAns">
                       <div>
-                          <h3>${result[0].idAnswers[0].idVote.length}</h3> Votes
+                          <h3 id="voteIdAnswer${result[0].idAnswers[i]._id}">${result[0].idAnswers[0].idVote.length}</h3> Votes
                       </div>
-                        <button class="ui toggle button active">Voted</button>
+                      <div id="btnanservote${result[0].idAnswers[i]._id}">
+                        <button onclick="answervote('${result[0].idAnswers[i]._id}')" class="ui toggle button active">Upvote</button>
+                      </div>
                   </div>
                   <div class="Ques">
                       <div>${result[0].idAnswers[i].textAnswer}</div>
@@ -80,9 +84,11 @@ function inputIdAnswer(input,textAnswer) {
             <div class="answer ui grid">
                 <div class="voteAns">
                     <div>
-                        <h3>0</h3> Votes
+                        <h3 id="voteIdAnswer${input}">0</h3> Votes
                     </div>
-                      <button class="ui toggle button active">Voted</button>
+                    <div id="btnanservote${input}">
+                      <button onclick="answervote('${input}')" class="ui toggle button active">Upvote</button>
+                    </div>
                 </div>
                 <div class="Ques">
                     <div>${textAnswer}</div>
@@ -92,4 +98,36 @@ function inputIdAnswer(input,textAnswer) {
       $("#listanswer").prepend(texAnswer)
     }
   })
+}
+
+function questionVote(inputIdQuestion) {
+    var voteQuestion = Number($("#voteIdQuestion").text())
+    $("#voteIdQuestion").text(`${voteQuestion+1}`)
+    document.getElementById("btnquestionvote").innerHTML = `<button onclick="questionDownVote('${inputIdQuestion}')" class="ui toggle button grey">Downvote</button>`
+}
+
+function answervote(inputIdAnswer) {
+  var voteAnswer = Number($(`#voteIdAnswer${inputIdAnswer}`).text())
+  $(`#voteIdAnswer${inputIdAnswer}`).text(`${voteAnswer+1}`)
+  document.getElementById(`btnanservote${inputIdAnswer}`).innerHTML = `<button onclick="answerDownVote('${inputIdAnswer}')" class="ui toggle button grey">Downvote</button>`
+}
+
+function questionDownVote(inputIdQuestion) {
+  var voteQuestion = Number($("#voteIdQuestion").text())
+  $("#voteIdQuestion").text(`${voteQuestion-1}`)
+  document.getElementById("btnquestionvote").innerHTML = `<button onclick="questionVote('${inputIdQuestion}')" class="ui toggle button active">Upvote</button>`
+}
+
+function answerDownVote(inputIdAnswer) {
+  var voteAnswer = Number($(`#voteIdAnswer${inputIdAnswer}`).text())
+  $(`#voteIdAnswer${inputIdAnswer}`).text(`${voteAnswer-1}`)
+  document.getElementById(`btnanservote${inputIdAnswer}`).innerHTML = `<button onclick="answervote('${inputIdAnswer}')" class="ui toggle button active">Upvote</button>`
+}
+
+function runVoteQuestion(input){
+
+}
+
+function runVoteAnswer(input){
+
 }
