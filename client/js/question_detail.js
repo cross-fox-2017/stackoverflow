@@ -59,6 +59,7 @@ function answer() {
     },
     success: function(result) {
       inputIdAnswer(result._id,tinyMCE.activeEditor.getContent())
+      tinyMCE.activeEditor.setContent('')
     }
   })
 }
