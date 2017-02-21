@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="icon" href="https://cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon@2.png?v=73d79a89bded" type="image/gif" sizes="16x16">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/sweetalert.css">
+    <link rel="stylesheet" href="/css/stylehome.css">
+    <!-- <script src="http://cloud.tinymce.com/stable/tinymce.min.js"></script> -->
+    <script src="http://cloud.tinymce.com/stable/tinymce.min.js?apiKey=zeje1w5mflf5rypct29l1gi197zwkb6nswwwq8re1hb01m9i"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea'
+        });
+    </script>
+    <title>Stackoverflow</title>
+</head>
+
+<body>
+    <div class="container">
+        <nav id="navigation-bar" class="navbar navbar-default">
+            <ul id="navigation-links">
+                <!-- <li><img src="http://lmsotfy.com/so.png" alt=""></li> -->
+                <li><a id="logo" href="#">Stack overflow</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/create_questions.html">Create Questions</a></li>
+                <div class="ui icon input">
+                    <input type="text" placeholder="Search...">
+                    <i class="circular search link icon"></i>
+                </div>
+                <li id="register" class="navbar-right"><a href="/register.html">Sign up</a></li>
+                <li id="login" class="navbar-right"><a href="/login.html">Login</a></li>
+            </ul>
+        </nav>
+        <img class="imageHome" src="http://i.imgur.com/ph1yogr.jpg">
+
+        <div class="ui two column grid">
+            <div id="listdetail" class="ui one column grid voteQues">
+                <div id="listquestion">
+
+                </div>
+                <div id="listanswer">
+
+                </div>
+
+                <div class="textAnswer">
+                    <textarea></textarea>
+                </div>
+                <div class="buttonAnswer">
+                    <button onclick="answer()" class="ui blue button">Post Your Answer</button>
+                </div>
+
+
+            </div>
+
+
+
+
+            <div class="iklan">
+                <a href="#">
+                    <img class="banner1" src="http://4.bp.blogspot.com/-AH-b3CMXQFg/VeLLgsIEvOI/AAAAAAAAA88/1ZFG03jTQ1o/s1600/Ciptakan%2Bpeluangmu%2BG%252B.jpg" alt="">
+                </a>
+                <a href="#">
+                    <img class="banner1" src="https://infoindonesia.files.wordpress.com/2015/12/gojek.jpg" alt="">
+                </a>
+                <a href="#">
+                    <img class="banner1" src="http://harianbernas.com/online/public/foto_news/image_news_535/01455463420wonderful_indonesia.jpg" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="./js/sweetalert.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="./js/index.js"></script> -->
+    <script type="text/javascript" src="./js/question_detail.js"></script>
+    <script type="text/javascript" src="./js/semantic.min.js"></script>
+</body>
+
+</html>
