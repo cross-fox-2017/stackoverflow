@@ -23,7 +23,7 @@ $(document).ready(function() {
                       <a onclick="questionDetails('${result[i]._id}')" href="/question_detail.html">
                           <div>${result[i].title}</div>
                       </a>
-                      <p>${result[i].description}</p>
+                      <p>${result[i].description.slice(0,250)}  . . . . . . . .<a onclick="questionDetails('${result[i]._id}')" href="/question_detail.html">(Read More)<a/></p>
                   </div>
               </div>`
         }

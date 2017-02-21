@@ -58,9 +58,6 @@ $(document).ready(function() {
           </div>
 
           <h3 id="totalanswer">Total Answers ${result[0].idAnswers.length}</h3><br>`
-          if(result[0].idVote.indexOf(userID[0])>=0){
-            document.getElementById("btnquestionvote").innerHTML = `<button onclick="questionDownVote('${result[0]._id}')" class="ui toggle button grey">Downvote</button>`
-          }
             var answer = ""
             for (var i = result[0].idAnswers.length - 1; i >= 0; i--) {
                 answer += `
@@ -80,6 +77,9 @@ $(document).ready(function() {
             }
 
             $("#listquestion").append(question)
+            if(result[0].idVote.indexOf(userID[0])>=0){
+              document.getElementById("btnquestionvote").innerHTML = `<button onclick="questionDownVote('${result[0]._id}')" class="ui toggle button grey">Downvote</button>`
+            }
             $("#listanswer").append(answer)
             for (var i = result[0].idAnswers.length - 1; i >= 0; i--) {
               if(result[0].idAnswers[i].idVote.indexOf(userID[0])>=0){
