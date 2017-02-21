@@ -17,5 +17,7 @@ router.put('/update',Question.update)
 
 router.put('/addAnswerToQuestions', Question.addAnswerToQuestions)
 
+router.put('/runVoteQuestion', Question.runVoteQuestion)
 
+router.put('/runDownVoteQuestion', Question.runDownVoteQuestion)
 module.exports = router;

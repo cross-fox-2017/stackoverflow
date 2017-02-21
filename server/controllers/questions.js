@@ -63,18 +63,57 @@ var Question = {
     },
 
     addAnswerToQuestions: function(req, res, next) {
-      modelsQuestion.findOneAndUpdate({
-        _id: req.body.idQuestions
-      },{
-        $push:{
-          idAnswers: req.body.idAnswers
-        }
-      },{
-        new: true
-      }).then(function(result) {
-          res.send(result)
-      })
-    }
+        modelsQuestion.findOneAndUpdate({
+            _id: req.body.idQuestions
+        }, {
+            $push: {
+                idAnswers: req.body.idAnswers
+            }
+        }, {
+            new: true
+        }).then(function(result) {
+            res.send(result)
+        })
+    },
+
+    runVoteQuestion: function(req, res, next) {
+        modelsQuestion.findOneAndUpdate({
+            _id: req.body.inputIdQuestion
+        }, {
+            $push: {
+                idVote: req.body.userID
+            }
+        }, {
+            new: true
+        }).then(function(result) {
+            res.send(result)
+        })
+    },
+
+    runDownVoteQuestion: function(req, res, next) {
+        modelsQuestion.findById(req.body.inputIdQuestion,function(err, result) {
+          if(err){
+            res.send(err)
+          }else{
+            var indexiDVote = result.idVote.indexOf(req.body.userID)
+            result.idVote.splice(indexiDVote,1)
+            result.save(function(err, result) {
+              if(err){
+                res.send({
+                  status: false,
+                  data: err
+                })
+              }else {
+                res.send({
+                  status: true,
+                  data: result
+                })
+              }
+            })
+          }
+        })
+    },
+
 
 }
 

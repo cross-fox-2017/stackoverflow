@@ -6,4 +6,10 @@ const Answer = require('../controllers/answers')
 
 router.post('/add',Answer.add)
 
+router.put('/runVoteAnswer', Answer.runVoteAnswer)
+
+router.put('/runDownVoteAnswer', Answer.runDownVoteAnswer)
+
+router.get('/show',Answer.show)
+
 module.exports = router;
