@@ -5,9 +5,9 @@ var jwt = require('jsonwebtoken')
 module.exports = {
   register: function (req, res) {
     let user = {
-      name: req.body.name,
-      username: req.body.username,
-      password: hash.generate(req.body.password)
+      name: req.body.registername,
+      username: req.body.registerusername,
+      password: hash.generate(req.body.registerpassword)
     }
 
     models.create(user)
@@ -21,20 +21,18 @@ module.exports = {
   login: function (req, res) {
     models.findOne(
       {
-        username: req.body.username
+        username: req.body.loginusername
       }
     ).then(function (data) {
-      if (hash.verify(req.body.password, data.password)) {
-        jwt.sign({ username: data.username } , process.env.SECRET, {}, function (err, token) {
-          res.json({token: token})
-          if (err)
-            res.json({err: 'PARAMETER ke 3 / ALGORITMA JWT BELUM DIISI , masukan {} '})
-        })
+      if (hash.verify(req.body.loginpassword, data.password)) {
+        var token = jwt.sign({user_id: data._id, username: data.username } , process.env.SECRET, {})
+
+        res.json({token: token})
       }else {
-        res.json({err: 'Password salah'})
+        res.json({err: 'wrong password'})
       }
     }).catch(function (err) {
-      res.json({err: err})
+      res.json({err: "Username doesn't exist"})
     })
   }
 
