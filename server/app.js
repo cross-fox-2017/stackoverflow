@@ -7,8 +7,8 @@ var bodyParser = require('body-parser')
 var cors = require('cors')
 require('dotenv').config()
 
-var index = require('./routes/index')
 var users = require('./routes/users')
+var stories = require('./routes/stories')
 
 var app = express()
 // Bring Mongoose into the app
@@ -49,7 +49,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(cors())
-app.use('/', index)
+app.use('/', stories)
 app.use('/API', users)
 
 // catch 404 and forward to error handler
