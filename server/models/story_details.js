@@ -9,6 +9,6 @@ var story_detailSchema = new Schema({
   }]
 })
 
-var story_detail = mongoose.model('Story_detail', story_detailSchema)
+var story_detail = mongoose.model('Story_details', story_detailSchema)
 
 module.exports = story_detail
