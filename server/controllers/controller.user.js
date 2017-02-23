@@ -46,7 +46,7 @@ var objUser = {
         // generate token
         if (passwordHash.verify(req.body.password, data.password)) {
           var token = jwt.sign({ username: data.username }, 'secret', { expiresIn: '1h' })
-          res.json({msgCode: 1, token})
+          res.json({msgCode: 1, token, username: data.username, userid: data.id})
         }else {
           res.json({msgCode: 0, msg: 'worng password'})
         }
