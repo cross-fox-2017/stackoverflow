@@ -5,8 +5,6 @@ const Schema = mongoose.Schema
 const questionSchema = new Schema({
   title: String,
   question: String,
-  answer: String ,
-  vote: Number
 },
 {
   timestamps: true

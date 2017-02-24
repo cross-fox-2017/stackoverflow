@@ -1,15 +1,23 @@
-const User = require('../models/question')
+const Quest = require('../models/question')
 
 module.exports = {
-  findAll: function (req, res, next) {
-    User.find({}).then(function (users) {
-      res.send(users)
+  findAllQuestion: function (req, res, next) {
+    Quest.find({})
+    .exec(function (err, data) {
+    if (err) return handleError(err)
+    else res.json(data)
     })
   },
 
-  findById: function (req, res, next) {
-    User.find({_id : req.body.id }).then(function (users) {
-      res.send(users)
+  createQuestion: function(req, res){
+    var newQuest = Quest({
+      title: req.body.title,
+      question: req.body.question
+    })
+
+    newQuest.save(function(err, data){
+      if (err) throw err
+      res.json(data)
     })
   }
 
