@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href=https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.css>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div class="ui text container">
+      <div class="ui padded grid row">
+        <div class="one wide column">
+          <img src="http://hammerjs.github.io/assets/img/stackoverflow-icon.svg" alt="" style="width:200%;">
+        </div>
+        <div class="ten wide column">
+          <p style="font-size:30px">stack<b>overflow</b> <span style="color:gray;font-size:70%;">Question and Answer</span></p >
+        </div>
+        <div class="five wide column">
+          <div class="ui icon input">
+            <input type="text" placeholder="Search...">
+            <i class="search icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <h3>All Question</h3>
+      <div class="ui container">
+
+        <div class="ui grid row piled segment">
+
+          <div class="ui grid two wide column centered">
+            <h3 style="color:gray;">11</h3>
+            <p>votes</p>
+            <h3 style="color:gray;">3</h3>
+            <p>answers</p>
+          </div>
+
+          <div class="fourteen wide column">
+            <p class="ui header" style="color:#0073e6;">How to install express with npm?</p>
+            <p>I recently installed nodejs version 0.10.26 on ubuntu 64 bit. node -v and npm -v commands run fine and I can see the correct versions. When I do a $ sudo npm install -g express
+            the installation goes fine. But when I try to create a project with express as $ express myProject I get an error saying</p>
+            <p>The program 'express' is currently not installed. You can install it by typing: sudo apt-get install node-express</p>
+            <p>Do I have to include some path in $PATH in order to run express? Please help.</p>
+          </div>
+        </div>
+
+        <div class="ui grid row piled segment">
+
+          <div class="ui grid two wide column centered">
+            <h3 style="color:gray;">6</h3>
+            <p>votes</p>
+            <h3 style="color:gray;">1</h3>
+            <p>answers</p>
+          </div>
+
+          <div class="fourteen wide column">
+            <p class="ui header" style="color:#0073e6;">TraCI Module - Problems running traci.start(sumoCmd)</p>
+            <p>sumoBinary = "/usr/bin/sumo-gui"<br>
+            sumoCmd = [sumoBinary, "-c", "map.sumo.cfg"]<br>
+            import traci <br>
+            traci.start(sumoCmd)</p>
+            <p>When I use the traci.start(sumoCmd) I get the following error:
+            <p>AtributeError: 'module' object has no attribute 'start'</p>
+              What is logical because if I search for the traci module, and use the dir command to analyze there is no start function at all:
+              This function is well used and I thought it was included in the traci module.
+              As it can be seen: http://www.sumo.dlr.de/wiki/TraCI/Interfacing_TraCI_from_Python
+              Can anyone explain how can I locate it? Thanks
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </body>
+</html>
