@@ -47,3 +47,52 @@ function signOut (){
   localStorage.removeItem("token");
   window.location.href = 'http://127.0.0.1:8080/index.html'
 }
+
+function getAllQuestion(){
+  $.ajax({
+    url: "http://localhost:3000/question",
+    type: "get",
+    success: function( result ) {
+      var temp = '';
+      for (var i = 0; i < result.length; i++) {
+        temp +=
+        `
+        <div class="row z-depth-3" id="${result[i]._id}">
+        <div class="col s12" >
+        <h4>${result[i].title}</h4>
+        <p>${result[i].question}</p>
+        <p class="right blue-text">createdBy: ${result[i].postBy.username}</p>
+        </div>
+        </div>
+        `
+        $('#list-question').prepend(temp)
+      }
+    }
+  });
+}
+
+getAllQuestion()
+function postQuestion(){
+  $.ajax({
+    url: "http://localhost:3000/question",
+    type: "POST",
+    data: {
+      title: $('#title').val(),
+      question: $('#question').val(),
+    },
+    success: function( result ) {
+      var temp =
+      `
+      <div class="row z-depth-3" id="${result._id}">
+      <div class="col s12" >
+      <h4>${result.title}</h4>
+      <p>${result.question}</p>
+      </div>
+      </div>
+      `
+      $('#list-question').prepend(temp)
+      $('#title').val('')
+      $('#question').val('')
+    }
+  });
+}

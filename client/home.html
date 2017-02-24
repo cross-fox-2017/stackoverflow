@@ -16,39 +16,59 @@
       <h5 class="indigo-text">TimeLine</h5>
       <div class="section"></div>
 
+      <!-- content -->
       <div class="container">
-        <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
-          <div class="row">
-            <div class="col s12">
-              <div class="col s6">
-                <div class="card-panel teal">
-                  <span class="white-text">I am a very simple card. I am good at containing small bits of information.
-                  I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
-                  </span>
+        <!-- input question -->
+        <div class="row z-depth-4">
+          <div class="col s12">
+            <div class="container">
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="title" type="text" class="validate">
+                  <label for="title">Title</label>
                 </div>
               </div>
-              <div class="col s6">
-                <div class="card-panel teal">
-                  <span class="white-text">I am a very simple card. I am good at containing small bits of information.
-                  I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
-                  </span>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="question" type="text" class="validate">
+                  <label for="question">Question</label>
                 </div>
+              </div>
+              <div class="row">
+                <a class="waves-effect green btn right" onclick="postQuestion()">Create Question</a>
               </div>
             </div>
           </div>
+        </div>
+        <!-- input question -->
+      </div>
+
+
+      <!-- content -->
+
+      <div class="container">
+        <div id="title-header">
+          <h3 class="center">List of question</h3>
+        </div>
+        <hr>
+        <div id="list-question" >
 
         </div>
       </div>
-      <a href="#" onclick="signOut()">Sign Out</a>
-    </center>
+      <!-- content -->
 
-    <div class="section"></div>
-    <div class="section"></div>
-  </main>
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <!-- Compiled and minified JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+      <!-- custome javascript -->
+      <script type="text/javascript">
+      /* actived modal */
+      $(document).ready(function(){
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal();
+      });
+      </script>
+      <script src="js/index.js"></script>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-  <script src="js/index.js"></script>
-</body>
-
-</html>
+      </html>
