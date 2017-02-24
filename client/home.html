@@ -47,12 +47,25 @@
                  </div>
                </div>
                <div class="row">
-                 <a class="waves-effect green btn right">Create Question</a>
+                 <a class="waves-effect green btn right" onclick="postQuestion()">Create Question</a>
                </div>
              </div>
            </div>
          </div>
         <!-- input question -->
+      </div>
+
+
+      <!-- content -->
+
+      <div class="container">
+        <div id="title-header">
+          <h3 class="center">List of question</h3>
+        </div>
+        <hr>
+        <div id="list-question" >
+
+        </div>
       </div>
       <!-- content -->
 
@@ -67,6 +80,59 @@
           // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
           $('.modal').modal();
         });
+
+
+        function getAllQuestion(){
+          $.ajax({
+            url: "http://localhost:3000/api/questions",
+            type: "get",
+            success: function( result ) {
+              var temp = '';
+              for (var i = 0; i < result.length; i++) {
+                temp +=
+                `
+                <div class="row z-depth-3" id="${result[i]._id}">
+                  <div class="col s12" >
+                    <h4>${result[i].title}</h4>
+                    <p>${result[i].question}</p>
+                    <p class="right blue-text">createdBy: ${result[i].postBy.username}</p>
+                  </div>
+                </div>
+                `
+                $('#list-question').prepend(temp)
+              }
+            }
+          });
+        }
+
+        getAllQuestion()
+
+        function postQuestion(){
+          $.ajax({
+            url: "http://localhost:3000/api/questions",
+            type: "post",
+            data: {
+              title: $('#title').val(),
+              question: $('#question').val(),
+              userid: localStorage.getItem("userid"),
+            },
+            success: function( result ) {
+              var temp =
+                `
+                <div class="row z-depth-3" id="${result._id}">
+                  <div class="col s12" >
+                    <h4>${result.title}</h4>
+                    <p>${result.question}</p>
+                    <p class="right blue-text">createdBy: ${result.postBy.username}</p>
+                  </div>
+                </div>
+                `
+                $('#list-question').prepend(temp)
+                $('#title').val('')
+                $('#question').val('')
+            }
+          });
+        }
 
       </script>
     </body>

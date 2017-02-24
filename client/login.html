@@ -69,6 +69,9 @@
               </div>
             </div>
             <div class="row">
+              <a class="waves-effect waves-light btn right" onclick="login()">LOGIN</a>
+            </div>
+            <div class="row">
               <p class="center blue-text"><a href="#modal1">don't have account?</a></p>
             </div>
           </div>
@@ -100,7 +103,9 @@
               password: $('#password').val()
             },
             success: function( result ) {
+              console.log(result);
               if (result.msgCode) {
+                console.log(result);
                 window.location.href = 'http://127.0.0.1:8080/home.html'
                 localStorage.setItem("token", result.token)
               }else{
