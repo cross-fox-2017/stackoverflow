@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!-- Compiled and minified CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+      <style media="screen">
+        nav{
+          margin-bottom: 5%;
+        }
+      </style>
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+
+      <!-- modal -->
+
+        <!-- Modal Structure -->
+        <div id="modal1" class="modal">
+          <div class="modal-content" style="padding: 50px;">
+            <h4>Register Form</h4>
+            <!-- input -->
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="register-username" type="text" class="validate">
+                <label for="register_username">Username</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="register-password" type="password" class="validate">
+                <label for="register_password">password</label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a class="modal-action modal-close waves-effect blue btn-flat white-text" onclick="register()">Register</a>
+          </div>
+        </div>
+      <!-- modal -->
+
+      <!-- navbar -->
+      <nav class="blue">
+         <div class="nav-wrapper">
+           <a href="index.html" class="brand-logo center">Mini StackOverFlow</a>
+         </div>
+       </nav>
+      <!-- navbar -->
+
+      <!-- content -->
+      <div class="container">
+        <div class="row">
+          <div class="col s3"></div>
+          <div class="col s6 z-depth-3" style="padding: 50px;">
+            <h4 class="blue-text center">Login Form</h4>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="username" type="text" class="validate">
+                <label for="username">Username</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="password" type="password" class="validate">
+                <label for="password">password</label>
+              </div>
+            </div>
+            <div class="row">
+              <a class="waves-effect waves-light btn right" onclick="login()">LOGIN</a>
+            </div>
+            <div class="row">
+              <p class="center blue-text"><a href="#modal1">don't have account?</a></p>
+            </div>
+          </div>
+          <div class="col s3"></div>
+        </div>
+      </div>
+      <!-- content -->
+
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <!-- Compiled and minified JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+      <!-- custome javascript -->
+      <script type="text/javascript">
+        /* actived modal */
+        $(document).ready(function(){
+          // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+          $('.modal').modal();
+        });
+
+        /* login function */
+        function login(){
+          // jquery ajax
+          $.ajax({
+            url: "http://localhost:3000/api/users/login",
+            type: 'post',
+            data: {
+              username: $('#username').val(),
+              password: $('#password').val()
+            },
+            success: function( result ) {
+              console.log(result);
+              if (result.msgCode) {
+                console.log(result);
+                window.location.href = 'http://127.0.0.1:8080/home.html'
+                localStorage.setItem("token", result.token)
+              }else{
+                $('#username').val('')
+                $('#password').val('')
+                Materialize.toast('worng username or password', 5000)
+              }
+            }
+          });
+          // jquery ajax
+        }
+
+        /* function resgiter */
+        function register(){
+          $.ajax({
+            url: "http://localhost:3000/api/users",
+            type: 'post',
+            data: {
+              username: $('#register-username').val(),
+              password: $('#register-password').val()
+            },
+            success: function( result ) {
+              Materialize.toast('Register Success!', 4000)
+              username: $('#register-username').val('')
+              password: $('#register-password').val('')
+            }
+          });
+        }
+
+      </script>
+    </body>
+  </html>
